@@ -45,6 +45,14 @@ namespace Formularios
                 AddDatosEstadisticosListBox("");
                 #endregion
 
+                #region COLOR QUE MAS ABUNDA
+                AddDatosEstadisticosListBox("===================== COLOR QUE MAS ABUNDA");
+                AddDatosEstadisticosListBox($"AUTOS: {Concesionaria.listAutos.MaxColor()}");
+                AddDatosEstadisticosListBox($"CAMIONETAS: {Concesionaria.listCamionetas.MaxColor()}");
+                AddDatosEstadisticosListBox($"MOTOCICLETAS: {Concesionaria.listMotocicletas.MaxColor()}");
+                AddDatosEstadisticosListBox("");
+                #endregion
+
                 #region TIPO DE COMBUSTIBLES
                 AddDatosEstadisticosListBox("=====================  TIPO DE COMBUSTIBLES");
                 AddDatosEstadisticosListBox("AUTOS:");

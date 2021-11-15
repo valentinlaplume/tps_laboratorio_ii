@@ -30,7 +30,7 @@ namespace Entidades
         {
             this.id = ultimoId + 1;
             ultimoId = this.id;
-            
+
             this.Marca = marca;
             this.cantidadPuertas = cantidadPuertas;
         }

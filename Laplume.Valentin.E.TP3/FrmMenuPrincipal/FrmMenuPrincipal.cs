@@ -16,6 +16,8 @@ using System.IO;
 
 namespace FrmMenuPrincipal
 {
+
+   
     public partial class FrmMenuPrincipal : FrmDatos
     {
         /// <summary>
@@ -36,15 +38,33 @@ namespace FrmMenuPrincipal
         {
             try
             {
-                //Concesionaria.listAutos = Json<List<Auto>>.LeerDatos("Autos_JSON");
-                //Concesionaria.listCamionetas = Json<List<Camioneta>>.LeerDatos("Camionetas_JSON");
-                //Concesionaria.listMotocicletas = Xml<Motocicleta>.LeerDatos("Motocicletas_XML");
+                Concesionaria.listAutos = Json<List<Auto>>.LeerDatos("Autos_JSON");
+                Concesionaria.listCamionetas = Json<List<Camioneta>>.LeerDatos("Camionetas_JSON");
+                Concesionaria.listMotocicletas = Xml<Motocicleta>.LeerDatos("Motocicletas_XML");
+                //foreach (Motocicleta item in Concesionaria.listMotocicletas)
+                //{
+                //    ManejadoraSql.Insertar2(
+                //                            (int)item.Marca,
+                //                            item.Nombre,
+                //                            item.Año,
+                //                            item.Km,
+                //                            (int)item.TipoCombustible,
+                //                            (int)item.TipoTransmision,
+                //                            (int)item.Color,
+                //                            item.Precio,
+                //                            item.Estado);
+                //}
 
-                Concesionaria.listAutos = ManejadoraSql.GetDatosDBAutos("SELECT * FROM Autos");
-            }
-            catch (ArchivosException ex)
-            {
-                MessageBox.Show(ex.Message, "¡Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //EColor colormax = Concesionaria.listMotocicletas.Max(x => x.Color);
+                //Concesionaria.listMotocicletas.MaxColor();
+
+                //ManejadoraSql.InsertarAutos(Concesionaria.listAutos);
+                //MessageBox.Show($"COLOR MAXIMO: {Concesionaria.listMotocicletas.MaxColor()}");
+
+                //string sdasdaa = ManejadoraSql.GetQueryInsert("camioneta");
+                //string nsdasda = ManejadoraSql.GetQueryInsert("motocicleta");
+
+                //List<Auto> n = ManejadoraSql.GetDatosDBAutos("SELECT * FROM Autos");
             }
             catch(Exception ex)
             {

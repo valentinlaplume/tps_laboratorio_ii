@@ -7,7 +7,7 @@ namespace Entidades
 {
 
     public static class ManejadoraSql
-    {
+    { 
         static SqlConnection Conexion;
         static SqlCommand Comando; // lleva la consulta
         static SqlDataReader Lector;
@@ -21,30 +21,20 @@ namespace Entidades
 
             Comando = new SqlCommand();
             Comando.CommandType = CommandType.Text; // que tipo de query vas a ejecutar
-            Comando.Connection = Conexion; // se agrega a donde se conecta, podes cambiar la conexion
+            Comando.Connection = Conexion; // se agrega a donde se conecta, podes cambiar la Conexion
 
         }
 
-        public static string GetQueryInsert(string tipoVehiculo, 
-                                            int marca,
-                                            string nombre,
-                                            int año,
-                                            int km, 
-                                            int tipoCombustible,
-                                            int tipoTransmision,
-                                            int color, 
-                                            float precio, 
-                                            int cantidadPuertas)
+        public static string GetQueryInsert(string tipoVehiculo)
         {
             string query = "";
-            switch (tipoVehiculo)
+            switch (tipoVehiculo.ToLower().Trim())
             {
-                case "Auto":
-                case "Camioneta":
+                case "auto":
+                case "camioneta":
                     query = $"INSERT INTO {tipoVehiculo}s VALUES (@marca, @nombre, @año, @km, @tipoCombustible, @tipoTransmision, @color, @precio, @cantidadPuertas)";
-                    //Comando.CommandText = $"INSERT INTO {tipoVehiculo}s VALUES (@marca, @nombre, @año, @km, @tipoCombustible, @tipoTransmision, @color, @precio, @cantidadPuertas)";
                     break;
-                case "Motocicleta":
+                case "motocicleta":
                     query = $"INSERT INTO {tipoVehiculo}s VALUES (@marca, @nombre, @año, @km, @tipoCombustible, @tipoTransmision, @color, @precio)";
                     break;
             }
@@ -52,22 +42,121 @@ namespace Entidades
             return query;
         }
 
-        public static string Insert2()
+
+        public static void Insertar(Func<string, string> queryInsert,
+                                    int id,
+                                    int marca,
+                                    string nombre,
+                                    int año,
+                                    int km,
+                                    int tipoCombustible,
+                                    int tipoTransmision,
+                                    int color,
+                                    float precio,
+                                    int cantidadPuertas)
         {
-            return "";
 
-        }
-
-
-        public static void Insertar(Func<string> query, string nombre)
-        {
-            
-            Comando.CommandText = $"INSERT INTO Autos VALUES (@nombre)";
+            //Comando.CommandText = queryInsert.Invoke("auto");
+            Comando.CommandText = $"INSERT INTO Autos VALUES (@id,@marca,@nombre,@año,@km,@tipoCombustible,@tipoTransmision,@color,@precio,@cantidadPuertas)";
             Comando.Parameters.Clear();
+            Comando.Parameters.AddWithValue("@id", id);
+            Comando.Parameters.AddWithValue("@marca", marca);
             Comando.Parameters.AddWithValue("@nombre", nombre);
+            Comando.Parameters.AddWithValue("@año", año);
+            Comando.Parameters.AddWithValue("@km", km);
+            Comando.Parameters.AddWithValue("@tipoCombustible", tipoCombustible);
+            Comando.Parameters.AddWithValue("@color", color);
+            Comando.Parameters.AddWithValue("@precio", precio);
+            Comando.Parameters.AddWithValue("@cantidadPuertas", cantidadPuertas);
 
 
         }
+
+        public static bool InsertarAutos(List<Auto> autos)
+        {
+            try
+            {
+                // (id,marca,nombre,año,km,tipoCombustible,tipoTransmision,color,precio,cantidadPuertas)
+                Comando.CommandText = $"INSERT INTO Autos VALUES (@id,@marca,@nombre,@año,@km,@tipoCombustible,@tipoTransmision,@color,@precio,@cantidadPuertas)";
+                foreach (Auto item in autos)
+                {
+                    Comando.Parameters.AddWithValue("@id", item.Id);
+                    Comando.Parameters.AddWithValue("@marca", (int)item.Marca);
+                    Comando.Parameters.AddWithValue("@nombre", item.Nombre);
+                    Comando.Parameters.AddWithValue("@año", item.Año);
+                    Comando.Parameters.AddWithValue("@km", item.Km);
+                    Comando.Parameters.AddWithValue("@tipoCombustible", (int)item.TipoCombustible);
+                    Comando.Parameters.AddWithValue("@tipoTransmision", (int)item.TipoTransmision);
+                    Comando.Parameters.AddWithValue("@color", (int)item.Color);
+                    Comando.Parameters.AddWithValue("@precio", item.Precio);
+                    Comando.Parameters.AddWithValue("@precio", item.Precio);
+                    Comando.Parameters.AddWithValue("@cantidadPuertas", item.CantidadPuertas);
+                    Comando.Parameters.Clear();
+                    Conexion.Open();
+                    Comando.ExecuteNonQuery();
+                    //Comando.CommandText += $"Insert into Pacientes values ({item.Dni},'{item.Nombre}',{(int)item.Dolencia},0); ";
+                }
+
+
+                //if (Conexion.State != ConnectionState.Open)
+                //{
+                //}
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Ocurrio un error al insertar datos de Autos en la Base de Datos.");
+            }
+            finally
+            {
+                Conexion.Close();
+            }
+
+        }
+
+        public static void Insertar2(
+                                    int marca,
+                                    string nombre,
+                                    int año,
+                                    int km,
+                                    int tipoCombustible,
+                                    int tipoTransmision,
+                                    int color,
+                                    float precio,
+                                    int estado)
+        {
+            try
+            {
+                Comando.CommandText = $"INSERT INTO motocicletas VALUES (@marca,@nombre,@año,@km,@tipoCombustible,@tipoTransmision,@color,@precio,@estado)";
+                Comando.Parameters.Clear();
+                Comando.Parameters.AddWithValue("@marca", marca);
+                Comando.Parameters.AddWithValue("@nombre", nombre);
+                Comando.Parameters.AddWithValue("@año", año);
+                Comando.Parameters.AddWithValue("@km", km);
+                Comando.Parameters.AddWithValue("@tipoCombustible", tipoCombustible);
+                Comando.Parameters.AddWithValue("@tipoTransmision", tipoTransmision);
+                Comando.Parameters.AddWithValue("@color", color);
+                Comando.Parameters.AddWithValue("@precio", precio);
+                Comando.Parameters.AddWithValue("@estado", estado);
+
+                if (Conexion.State != ConnectionState.Open)
+                {
+                    Conexion.Open();
+                }
+
+                Comando.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Ocurrio un error al insertar datos en la Base de Datos. {ex.Message}");
+            }
+            finally
+            {
+                Conexion.Close();
+            }
+        }
+
 
         public static void Consulta(string consulta)
         {
