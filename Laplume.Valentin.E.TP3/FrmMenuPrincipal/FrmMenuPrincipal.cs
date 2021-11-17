@@ -21,8 +21,6 @@ namespace FrmMenuPrincipal
    
     public partial class FrmMenuPrincipal : FrmDatos
     {
-        Task tareaCargarDatos;
-
         /// <summary>
         /// Constructor por defecto sin parametros
         /// </summary>
@@ -34,16 +32,38 @@ namespace FrmMenuPrincipal
         #region TASK BARRA LOAD Y CARGA DE LISTAS DESDE LA DB
         public bool BarraInicioSesion()
         {
-            prg_BarraInicioPrograma.Minimum = 1;
-            prg_BarraInicioPrograma.Maximum = 10000;
-            prg_BarraInicioPrograma.Step = 2;
-            for (int i = 0; i < 15000; i++)
+            bool retorno = false;
+            if (this.prg_BarraInicioPrograma.InvokeRequired)
             {
-                prg_BarraInicioPrograma.PerformStep();
-                if (i == 14999)
-                    return true;
+                this.prg_BarraInicioPrograma.BeginInvoke((MethodInvoker)delegate ()
+                {
+                    Concesionaria.listAutos = ManejadoraSql.GetAutos();
+                    Concesionaria.listCamionetas = ManejadoraSql.GetCamionetas();
+                    Concesionaria.listMotocicletas = ManejadoraSql.GetMotocicletas();
+
+                    prg_BarraInicioPrograma.Minimum = 1;
+                    prg_BarraInicioPrograma.Maximum = 10000;
+                    prg_BarraInicioPrograma.Step = 2;
+                    for (int i = 0; i < 15000; i++)
+                    {
+                        prg_BarraInicioPrograma.PerformStep();
+                        if (i == 14999)
+                            retorno = true;
+                    }
+
+                    prg_BarraInicioPrograma.Visible = false;
+                    this.Refresh();
+                    if (this.lbl_CargandoDatos.InvokeRequired)
+                    {
+                        this.lbl_CargandoDatos.BeginInvoke((MethodInvoker)delegate ()
+                        {
+                            lbl_CargandoDatos.Visible = false;
+                            this.Refresh();
+                        });
+                    }
+                });
             }
-            return false;
+            return retorno;
         }
 
         private bool Cargando()
@@ -128,6 +148,8 @@ namespace FrmMenuPrincipal
         private void HabilitarMenuPrincipal()
         {
             pb_Logo.Location = new Point(87, 3);
+            pb_GuardarCambios.Visible = true;
+            lbl_GuardarCambios.Visible = true;
             lbl_CargandoDatos.Visible = false;
             pb_Reportes.Visible = true;
             pb_ABMVehiculos.Visible = true;

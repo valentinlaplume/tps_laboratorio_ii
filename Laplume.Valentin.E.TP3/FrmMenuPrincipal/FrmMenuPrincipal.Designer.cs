@@ -44,6 +44,14 @@ namespace FrmMenuPrincipal
             ((System.ComponentModel.ISupportInitialize)(this.pb_Reportes)).BeginInit();
             this.SuspendLayout();
             // 
+            // pb_GuardarCambios
+            // 
+            this.pb_GuardarCambios.Visible = false;
+            // 
+            // lbl_GuardarCambios
+            // 
+            this.lbl_GuardarCambios.Visible = false;
+            // 
             // pb_Logo
             // 
             this.pb_Logo.BackColor = System.Drawing.SystemColors.Control;
@@ -59,7 +67,7 @@ namespace FrmMenuPrincipal
             // 
             this.pb_ABMVehiculos.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pb_ABMVehiculos.Image = global::Formularios.Properties.Resources.boton_menu;
-            this.pb_ABMVehiculos.Location = new System.Drawing.Point(112, 191);
+            this.pb_ABMVehiculos.Location = new System.Drawing.Point(112, 200);
             this.pb_ABMVehiculos.Name = "pb_ABMVehiculos";
             this.pb_ABMVehiculos.Size = new System.Drawing.Size(100, 91);
             this.pb_ABMVehiculos.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -72,7 +80,7 @@ namespace FrmMenuPrincipal
             // 
             this.pb_Reportes.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pb_Reportes.Image = global::Formularios.Properties.Resources.boton_reportes;
-            this.pb_Reportes.Location = new System.Drawing.Point(251, 191);
+            this.pb_Reportes.Location = new System.Drawing.Point(251, 200);
             this.pb_Reportes.Name = "pb_Reportes";
             this.pb_Reportes.Size = new System.Drawing.Size(100, 91);
             this.pb_Reportes.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -86,7 +94,7 @@ namespace FrmMenuPrincipal
             this.lbl_ABMVehiculos.AutoSize = true;
             this.lbl_ABMVehiculos.BackColor = System.Drawing.Color.Transparent;
             this.lbl_ABMVehiculos.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lbl_ABMVehiculos.Location = new System.Drawing.Point(124, 283);
+            this.lbl_ABMVehiculos.Location = new System.Drawing.Point(124, 292);
             this.lbl_ABMVehiculos.Name = "lbl_ABMVehiculos";
             this.lbl_ABMVehiculos.Size = new System.Drawing.Size(78, 18);
             this.lbl_ABMVehiculos.TabIndex = 5;
@@ -98,7 +106,7 @@ namespace FrmMenuPrincipal
             this.lbl_Reportes.AutoSize = true;
             this.lbl_Reportes.BackColor = System.Drawing.Color.Transparent;
             this.lbl_Reportes.Font = new System.Drawing.Font("Calibri", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lbl_Reportes.Location = new System.Drawing.Point(267, 283);
+            this.lbl_Reportes.Location = new System.Drawing.Point(267, 292);
             this.lbl_Reportes.Name = "lbl_Reportes";
             this.lbl_Reportes.Size = new System.Drawing.Size(70, 18);
             this.lbl_Reportes.TabIndex = 6;
@@ -126,7 +134,7 @@ namespace FrmMenuPrincipal
             this.prg_BarraInicioPrograma.ForeColor = System.Drawing.Color.Green;
             this.prg_BarraInicioPrograma.Location = new System.Drawing.Point(-3, 304);
             this.prg_BarraInicioPrograma.Name = "prg_BarraInicioPrograma";
-            this.prg_BarraInicioPrograma.Size = new System.Drawing.Size(472, 23);
+            this.prg_BarraInicioPrograma.Size = new System.Drawing.Size(479, 23);
             this.prg_BarraInicioPrograma.TabIndex = 14;
             // 
             // FrmMenuPrincipal
@@ -136,12 +144,12 @@ namespace FrmMenuPrincipal
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(469, 321);
             this.Controls.Add(this.pb_Logo);
-            this.Controls.Add(this.lbl_CargandoDatos);
             this.Controls.Add(this.prg_BarraInicioPrograma);
             this.Controls.Add(this.lbl_Reportes);
             this.Controls.Add(this.lbl_ABMVehiculos);
             this.Controls.Add(this.pb_Reportes);
             this.Controls.Add(this.pb_ABMVehiculos);
+            this.Controls.Add(this.lbl_CargandoDatos);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.HelpButton = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -150,6 +158,7 @@ namespace FrmMenuPrincipal
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmMenuPrincipal_FormClosing);
             this.Load += new System.EventHandler(this.FrmMenuPrincipal_Load);
+            this.Controls.SetChildIndex(this.lbl_CargandoDatos, 0);
             this.Controls.SetChildIndex(this.pb_ABMVehiculos, 0);
             this.Controls.SetChildIndex(this.pb_Reportes, 0);
             this.Controls.SetChildIndex(this.lbl_ABMVehiculos, 0);
@@ -157,7 +166,6 @@ namespace FrmMenuPrincipal
             this.Controls.SetChildIndex(this.lbl_GuardarCambios, 0);
             this.Controls.SetChildIndex(this.pb_GuardarCambios, 0);
             this.Controls.SetChildIndex(this.prg_BarraInicioPrograma, 0);
-            this.Controls.SetChildIndex(this.lbl_CargandoDatos, 0);
             this.Controls.SetChildIndex(this.pb_Logo, 0);
             ((System.ComponentModel.ISupportInitialize)(this.pb_GuardarCambios)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pb_Logo)).EndInit();
