@@ -13,6 +13,9 @@
     <Compile Update="FrmBaseListas.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="FrmLoadTask.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="FrmMenuPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>

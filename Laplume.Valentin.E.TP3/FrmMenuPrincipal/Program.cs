@@ -21,7 +21,6 @@ namespace FrmMenuPrincipal
 
             FrmMenuPrincipal frmMenuPrincipalnew = new FrmMenuPrincipal();
             frmMenuPrincipalnew.Text = "Menu Principal - VL MOTORS" + " - " + DateTime.Now.ToString("d");
-            //Application.Run(new FrmOpenFileDialog());
             Application.Run(frmMenuPrincipalnew);
         }
     }

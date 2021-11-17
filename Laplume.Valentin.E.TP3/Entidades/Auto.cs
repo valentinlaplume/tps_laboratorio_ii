@@ -35,6 +35,21 @@ namespace Entidades
             this.cantidadPuertas = cantidadPuertas;
         }
 
+        /// <summary>
+        /// Constructor con campo ID, para poder leer datos desde la base de datos
+        /// ya que posee ID IDENTITY
+        /// </summary>
+        public Auto(int id, EMarcaAutomovil marca, string nombre, int año, int km, ETipoCombustible tipoCombustible, ETipoTransmision tipoTransmision,
+                    EColor color, float precio, int cantidadPuertas)
+                   : base(nombre, año, km, tipoCombustible, tipoTransmision, color, precio)
+        {
+            this.id = id;
+            ultimoId = this.id; // no hace falta
+
+            this.Marca = marca;
+            this.cantidadPuertas = cantidadPuertas;
+        }
+
         public int Id
         {
             get { return this.id; }

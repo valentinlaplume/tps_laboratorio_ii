@@ -13,6 +13,7 @@ using Archivos;
 using Formularios;
 using Entidades.Enumerados;
 using System.IO;
+using System.Threading;
 
 namespace FrmMenuPrincipal
 {
@@ -20,6 +21,8 @@ namespace FrmMenuPrincipal
    
     public partial class FrmMenuPrincipal : FrmDatos
     {
+        Task tareaCargarDatos;
+
         /// <summary>
         /// Constructor por defecto sin parametros
         /// </summary>
@@ -28,48 +31,110 @@ namespace FrmMenuPrincipal
             InitializeComponent();
         }
 
+        #region TASK BARRA LOAD Y CARGA DE LISTAS DESDE LA DB
+        public bool BarraInicioSesion()
+        {
+            prg_BarraInicioPrograma.Minimum = 1;
+            prg_BarraInicioPrograma.Maximum = 10000;
+            prg_BarraInicioPrograma.Step = 2;
+            for (int i = 0; i < 15000; i++)
+            {
+                prg_BarraInicioPrograma.PerformStep();
+                if (i == 14999)
+                    return true;
+            }
+            return false;
+        }
+
+        private bool Cargando()
+        {
+
+            if (this.prg_BarraInicioPrograma.InvokeRequired)
+            {
+                this.prg_BarraInicioPrograma.BeginInvoke((MethodInvoker)delegate ()
+                {
+                    Concesionaria.listAutos = ManejadoraSql.GetAutos();
+                    Concesionaria.listCamionetas = ManejadoraSql.GetCamionetas();
+                    Concesionaria.listMotocicletas = ManejadoraSql.GetMotocicletas();
+
+                    prg_BarraInicioPrograma.Minimum = 1;
+                    prg_BarraInicioPrograma.Maximum = 10;
+                    prg_BarraInicioPrograma.Step = 2;
+                    this.Refresh();
+
+                    for (int i = 100; i < 1000;)
+                    {
+                        Thread.Sleep(i);
+                        prg_BarraInicioPrograma.PerformStep();
+                        this.Refresh();
+                        i += 100;
+                    }
+
+                    prg_BarraInicioPrograma.Visible = false;
+                    this.Refresh();
+                    if (this.lbl_CargandoDatos.InvokeRequired){
+                        this.lbl_CargandoDatos.BeginInvoke((MethodInvoker)delegate ()
+                        {
+                            lbl_CargandoDatos.Visible = false;
+                            this.Refresh();
+                        });
+                    }
+                });
+            }
+            else
+            {
+                this.Refresh();
+            }
+
+            return true;
+        }
+        #endregion
 
         /// <summary>
-        /// Evento load, carga los archivos con las listas
+        /// Evento load, carga las listas desde la base de datos
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void FrmMenuPrincipal_Load(object sender, EventArgs e)
+        /// 
+        private async void FrmMenuPrincipal_Load(object sender, EventArgs e)
         {
             try
             {
-                Concesionaria.listAutos = Json<List<Auto>>.LeerDatos("Autos_JSON");
-                Concesionaria.listCamionetas = Json<List<Camioneta>>.LeerDatos("Camionetas_JSON");
-                Concesionaria.listMotocicletas = Xml<Motocicleta>.LeerDatos("Motocicletas_XML");
-                //foreach (Motocicleta item in Concesionaria.listMotocicletas)
-                //{
-                //    ManejadoraSql.Insertar2(
-                //                            (int)item.Marca,
-                //                            item.Nombre,
-                //                            item.Año,
-                //                            item.Km,
-                //                            (int)item.TipoCombustible,
-                //                            (int)item.TipoTransmision,
-                //                            (int)item.Color,
-                //                            item.Precio,
-                //                            item.Estado);
-                //}
+                // codigo inactivo
+                #region CARGA DE LISTAS POR MEDIO DE ARCHIVOS
+                //Concesionaria.listAutos = Json<List<Auto>>.LeerDatos("Autos_JSON");
+                //Concesionaria.listCamionetas = Json<List<Camioneta>>.LeerDatos("Camionetas_JSON");
+                //Concesionaria.listMotocicletas = Xml<Motocicleta>.LeerDatos("Motocicletas_XML");
+                #endregion
 
-                //EColor colormax = Concesionaria.listMotocicletas.Max(x => x.Color);
-                //Concesionaria.listMotocicletas.MaxColor();
+                // label.InvokeRequired (te dice si estas en el hilo del control ese, propiedad del control)
+                // label.BeginInvoke(delegado que se ejecuta de forma asincrona y nos une con la parte del hilo principal donde se unen las cosas, osea el control de donde fue creado)
+                //await Task.Run(CargarDatosVehiculos);
+                //tareaCargarDatos.Start();
 
-                //ManejadoraSql.InsertarAutos(Concesionaria.listAutos);
-                //MessageBox.Show($"COLOR MAXIMO: {Concesionaria.listMotocicletas.MaxColor()}");
-
-                //string sdasdaa = ManejadoraSql.GetQueryInsert("camioneta");
-                //string nsdasda = ManejadoraSql.GetQueryInsert("motocicleta");
-
-                //List<Auto> n = ManejadoraSql.GetDatosDBAutos("SELECT * FROM Autos");
+                await Task.Run(Cargando);
+                HabilitarMenuPrincipal();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "¡Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        /// <summary>
+        /// Muestra lo necesario del funcionamiento del programa,
+        /// luego de cargar los datos de la task
+        /// </summary>
+        private void HabilitarMenuPrincipal()
+        {
+            pb_Logo.Location = new Point(87, 3);
+            lbl_CargandoDatos.Visible = false;
+            pb_Reportes.Visible = true;
+            pb_ABMVehiculos.Visible = true;
+            lbl_GuardarCambios.Visible = true;
+            lbl_ABMVehiculos.Visible = true;
+            lbl_Reportes.Visible = true;
+            this.Refresh();
         }
 
         /// <summary>

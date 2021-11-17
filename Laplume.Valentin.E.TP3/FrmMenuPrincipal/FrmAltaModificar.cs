@@ -48,39 +48,42 @@ namespace Formularios
                     switch (cmb_TipoVehiculo.Text)
                     {
                         case "Auto":
-                            Concesionaria.listAutos.Add(new Auto((EMarcaAutomovil)cmb_MarcaAutomovil.SelectedIndex,
-                                                        txt_Nombre.Text,
-                                                        int.Parse(txt_Año.Text),
-                                                        int.Parse(txt_Km.Text),
-                                                        (ETipoCombustible)cmb_TipoDeCombustible.SelectedIndex,
-                                                        (ETipoTransmision)cmb_TipoDeTransmision.SelectedIndex,
-                                                        (EColor)cmb_Color.SelectedIndex,
-                                                        float.Parse(txt_Precio.Text),
-                                                        int.Parse(cmb_CantidadPuertas.Text)));
-                            retorno = true;
+                            Auto newAuto = new Auto((EMarcaAutomovil)cmb_MarcaAutomovil.SelectedIndex,
+                                                    txt_Nombre.Text,
+                                                    int.Parse(txt_Año.Text),
+                                                    int.Parse(txt_Km.Text),
+                                                    (ETipoCombustible)cmb_TipoDeCombustible.SelectedIndex,
+                                                    (ETipoTransmision)cmb_TipoDeTransmision.SelectedIndex,
+                                                    (EColor)cmb_Color.SelectedIndex,
+                                                    float.Parse(txt_Precio.Text),
+                                                    int.Parse(cmb_CantidadPuertas.Text));
+                            Concesionaria.listAutos.Add(newAuto);
+                            retorno = ManejadoraSql.InsertarAuto(newAuto);
                             break;
                         case "Camioneta":
-                            Concesionaria.listCamionetas.Add(new Camioneta((EMarcaAutomovil)cmb_MarcaAutomovil.SelectedIndex,
+                            Camioneta newCamioneta = new Camioneta((EMarcaAutomovil)cmb_MarcaAutomovil.SelectedIndex,
+                                                                    txt_Nombre.Text,
+                                                                    int.Parse(txt_Año.Text),
+                                                                    int.Parse(txt_Km.Text),
+                                                                    (ETipoCombustible)cmb_TipoDeCombustible.SelectedIndex,
+                                                                    (ETipoTransmision)cmb_TipoDeTransmision.SelectedIndex,
+                                                                    (EColor)cmb_Color.SelectedIndex,
+                                                                    float.Parse(txt_Precio.Text),
+                                                                    int.Parse(cmb_CantidadPuertas.Text));
+                            Concesionaria.listCamionetas.Add(newCamioneta);
+                            retorno = ManejadoraSql.InsertarCamioneta(newCamioneta);
+                            break;
+                        case "Motocicleta":
+                            Motocicleta newMotocicleta = new Motocicleta((EMarcaMotocicleta)cmb_MarcaMotocicleta.SelectedIndex,
                                                                             txt_Nombre.Text,
                                                                             int.Parse(txt_Año.Text),
                                                                             int.Parse(txt_Km.Text),
                                                                             (ETipoCombustible)cmb_TipoDeCombustible.SelectedIndex,
                                                                             (ETipoTransmision)cmb_TipoDeTransmision.SelectedIndex,
                                                                             (EColor)cmb_Color.SelectedIndex,
-                                                                            float.Parse(txt_Precio.Text),
-                                                                            int.Parse(cmb_CantidadPuertas.Text)));
-                            retorno = true;
-                            break;
-                        case "Motocicleta":
-                            Concesionaria.listMotocicletas.Add(new Motocicleta((EMarcaMotocicleta)cmb_MarcaMotocicleta.SelectedIndex,
-                                                                                txt_Nombre.Text,
-                                                                                int.Parse(txt_Año.Text),
-                                                                                int.Parse(txt_Km.Text),
-                                                                                (ETipoCombustible)cmb_TipoDeCombustible.SelectedIndex,
-                                                                                (ETipoTransmision)cmb_TipoDeTransmision.SelectedIndex,
-                                                                                (EColor)cmb_Color.SelectedIndex,
-                                                                                float.Parse(txt_Precio.Text)));
-                            retorno = true;
+                                                                            float.Parse(txt_Precio.Text));
+                            Concesionaria.listMotocicletas.Add(newMotocicleta);
+                            retorno = ManejadoraSql.InsertarMotocicleta(newMotocicleta);
                             break;
                     }
                 }
@@ -166,7 +169,7 @@ namespace Formularios
         }
 
         /// <summary>
-        /// Valida los campos asignados
+        /// Valida los campos asignados del usuario
         /// </summary>
         private bool ValidarCampos()
         {
@@ -195,7 +198,7 @@ namespace Formularios
                 lbl_Informar.Visible = true;
                 lbl_Informar.Text = ex.Message;
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 lbl_Informar.Visible = true;
                 lbl_Informar.Text = "Verifique que los datos ingresados sean válidos.";
@@ -301,7 +304,7 @@ namespace Formularios
             catch (Exception ex)
             {
                 lbl_Informar.Visible = true;
-                lbl_Informar.Text = "Ocurrió al intentar preparar el entorno de modificación del vehículo.";
+                lbl_Informar.Text = "Ocurrió un error al intentar preparar el entorno de modificación del vehículo.";
             }
         }
 

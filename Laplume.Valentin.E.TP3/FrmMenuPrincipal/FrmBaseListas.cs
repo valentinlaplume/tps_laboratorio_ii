@@ -713,12 +713,19 @@ namespace Formularios
         /// <param name="e"></param>
         private void btn_Agregar_Click(object sender, EventArgs e)
         {
-            FrmAltaModificar frmAlta = new FrmAltaModificar(false);
-            frmAlta.Text = "Alta de un Vehículo - VL MOTORS" + " - " + DateTime.Now.ToString("d");
-            frmAlta.lbl_Titulo.Text = "Alta de un Vehículo";
-            Console.Beep(100, 400);
-            frmAlta.ShowDialog();
-            dgv_Vehiculos.DataSource = null;
+            try
+            {
+                FrmAltaModificar frmAlta = new FrmAltaModificar(false);
+                frmAlta.Text = "Alta de un Vehículo - VL MOTORS" + " - " + DateTime.Now.ToString("d");
+                frmAlta.lbl_Titulo.Text = "Alta de un Vehículo";
+                frmAlta.ShowDialog();
+                dgv_Vehiculos.DataSource = null;
+            }
+            catch (Exception ex)
+            {
+                lbl_Errores.Visible = true;
+                lbl_Errores.Text = ex.Message;
+            }
         }
 
         /// <summary>
@@ -730,13 +737,11 @@ namespace Formularios
         {
             try
             {
-                FrmAltaModificar frmModificar = new FrmAltaModificar(true, GetIdVehiculoSeleccionado());
+                FrmAltaModificar frmModificar = new FrmAltaModificar(true, GetVehiculoSeleccionado());
                 frmModificar.Text = "Modificación de un Vehículo - VL MOTORS" + " - " + DateTime.Now.ToString("d");
                 frmModificar.lbl_Titulo.Text = "Modificación de un Vehículo";
-                Console.Beep(100, 400);
                 frmModificar.ShowDialog();
                 CargarVehiculosPorTipoVehiculo(cmb_TipoVehiculo.Text);
-
             }
             catch (Exception ex)
             {
@@ -754,9 +759,10 @@ namespace Formularios
         {
             try
             {
-                Vehiculo vehiculoBaja = GetIdVehiculoSeleccionado();
+                Vehiculo vehiculoBaja = GetVehiculoSeleccionado();
+                bool okDeleteDB =  ManejadoraSql.DeleteAuto(cmb_TipoVehiculo.Text, GetIdVehiculoSeleccionado());
                 vehiculoBaja.Estado = 0;
-                if (vehiculoBaja.Estado == 0)
+                if (vehiculoBaja.Estado == 0 && okDeleteDB)
                 {
                     MessageBox.Show("Baja del vehículo realizada.", "¡Información!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     CargarVehiculosPorTipoVehiculo(cmb_TipoVehiculo.Text);
@@ -783,7 +789,7 @@ namespace Formularios
             try
             {
                 lbl_Errores.Visible = false;
-                Vehiculo vehiculoSeleccionado = GetIdVehiculoSeleccionado();
+                Vehiculo vehiculoSeleccionado = GetVehiculoSeleccionado();
 
                 if (vehiculoSeleccionado != null)
                 {
@@ -821,7 +827,7 @@ namespace Formularios
         /// Obtiene vehiculo seleccionado
         /// </summary>
         /// <returns></returns>
-        private Vehiculo GetIdVehiculoSeleccionado()
+        private Vehiculo GetVehiculoSeleccionado()
         {
             Vehiculo vehiculoSeleccionado = null;
             try
@@ -849,6 +855,35 @@ namespace Formularios
                 lbl_Errores.Text = "Error al buscar vehículo. Intente haciendo doble click en el vehículo.";
             }
             return vehiculoSeleccionado;
+        }
+
+        private int GetIdVehiculoSeleccionado()
+        {
+            int idSeleccionado = 0;
+            try
+            {
+                if (dgv_Vehiculos.CurrentRow.Cells[0].Value is null)
+                    throw new Exception("Error, no ha seleccionado un vehículo.");
+
+                switch (cmb_TipoVehiculo.Text)
+                {
+                    case "Auto":
+                        idSeleccionado = Concesionaria.listAutos.Find(a => (a.Id == (int)dgv_Vehiculos.CurrentRow.Cells[0].Value)).Id;
+                        break;
+                    case "Camioneta":
+                        idSeleccionado = Concesionaria.listCamionetas.Find(a => (a.Id == (int)dgv_Vehiculos.CurrentRow.Cells[0].Value)).Id;
+                        break;
+                    case "Motocicleta":
+                        idSeleccionado = Concesionaria.listMotocicletas.Find(a => (a.Id == (int)dgv_Vehiculos.CurrentRow.Cells[0].Value)).Id;
+                        break;
+                }
+            }
+            catch (Exception)
+            {
+                lbl_Errores.Visible = true;
+                lbl_Errores.Text = "Error al buscar vehículo. Intente haciendo doble click en el vehículo de la grilla.";
+            }
+            return idSeleccionado;
         }
 
 

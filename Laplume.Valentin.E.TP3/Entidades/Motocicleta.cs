@@ -37,6 +37,20 @@ namespace Entidades
             this.Marca = marca;
         }
 
+        /// <summary>
+        /// Constructor con campo ID, para poder leer datos desde la base de datos
+        /// ya que posee ID IDENTITY
+        /// </summary>
+        public Motocicleta(int id, EMarcaMotocicleta marca, string nombre, int año, int km,
+                   ETipoCombustible tipoCombustible, ETipoTransmision tipoTransmision,
+                   EColor color, float precio)
+                : base(nombre, año, km, tipoCombustible, tipoTransmision, color, precio)
+        {
+            this.id = id;
+            ultimoId = this.id;
+
+            this.Marca = marca;
+        }
         public int Id
         {
             get { return this.id; }

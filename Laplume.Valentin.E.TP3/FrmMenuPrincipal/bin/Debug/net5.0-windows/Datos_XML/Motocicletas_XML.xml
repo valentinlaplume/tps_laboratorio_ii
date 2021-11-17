@@ -99,4 +99,15 @@
     <Estado>1</Estado>
     <Marca>Ktm</Marca>
   </Motocicleta>
+  <Motocicleta>
+    <Nombre>Titan</Nombre>
+    <Año>2010</Año>
+    <Km>12000</Km>
+    <TipoCombustible>Nafta</TipoCombustible>
+    <TipoTransmision>Manual</TipoTransmision>
+    <Color>Negro</Color>
+    <Precio>350000</Precio>
+    <Estado>1</Estado>
+    <Marca>Honda</Marca>
+  </Motocicleta>
 </ArrayOfMotocicleta>
