@@ -67,7 +67,7 @@ namespace FrmMenuPrincipal
             // 
             this.pb_ABMVehiculos.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pb_ABMVehiculos.Image = global::Formularios.Properties.Resources.boton_menu;
-            this.pb_ABMVehiculos.Location = new System.Drawing.Point(112, 200);
+            this.pb_ABMVehiculos.Location = new System.Drawing.Point(115, 200);
             this.pb_ABMVehiculos.Name = "pb_ABMVehiculos";
             this.pb_ABMVehiculos.Size = new System.Drawing.Size(100, 91);
             this.pb_ABMVehiculos.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -80,7 +80,7 @@ namespace FrmMenuPrincipal
             // 
             this.pb_Reportes.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pb_Reportes.Image = global::Formularios.Properties.Resources.boton_reportes;
-            this.pb_Reportes.Location = new System.Drawing.Point(251, 200);
+            this.pb_Reportes.Location = new System.Drawing.Point(255, 200);
             this.pb_Reportes.Name = "pb_Reportes";
             this.pb_Reportes.Size = new System.Drawing.Size(100, 91);
             this.pb_Reportes.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -150,9 +150,10 @@ namespace FrmMenuPrincipal
             this.Controls.Add(this.pb_Reportes);
             this.Controls.Add(this.pb_ABMVehiculos);
             this.Controls.Add(this.lbl_CargandoDatos);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.HelpButton = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(6);
             this.MaximizeBox = false;
             this.Name = "FrmMenuPrincipal";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

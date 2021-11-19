@@ -104,10 +104,11 @@ namespace Formularios
         /// <summary>
         /// Modifica un vehiculo del tipo especificado en el combo box
         /// </summary>
-        private void ModificarVehiculo()
+        private bool ModificarVehiculo()
         {
+            bool retorno = false;
             try
-            { 
+            {
                 if(ValidarCampos())
                 {
                     switch (cmb_TipoVehiculo.Text)
@@ -138,6 +139,7 @@ namespace Formularios
                                 camionetataSeleccionada.TipoCombustible = (ETipoCombustible)cmb_TipoDeCombustible.SelectedIndex;
                                 camionetataSeleccionada.TipoTransmision = (ETipoTransmision)cmb_TipoDeTransmision.SelectedIndex;
                                 camionetataSeleccionada.CantidadPuertas = int.Parse(cmb_CantidadPuertas.Text);
+
                             }
                             break;
                         case "Motocicleta":
@@ -151,9 +153,12 @@ namespace Formularios
                                 motocicletaSeleccionada.Color = (EColor)cmb_Color.SelectedIndex;
                                 motocicletaSeleccionada.TipoCombustible = (ETipoCombustible)cmb_TipoDeCombustible.SelectedIndex;
                                 motocicletaSeleccionada.TipoTransmision = (ETipoTransmision)cmb_TipoDeTransmision.SelectedIndex;
+
                             }
                             break;
+                               
                     }
+                    retorno = ManejadoraSql.ModificarVehiculo(cmb_TipoVehiculo.Text, autoSeleccionado, camionetataSeleccionada, motocicletaSeleccionada);
                 }
             }
             catch (AtributoInvalidoException ex)
@@ -166,6 +171,7 @@ namespace Formularios
                 lbl_Informar.Visible = true;
                 lbl_Informar.Text = ex.Message;
             }
+            return retorno;
         }
 
         /// <summary>
@@ -364,9 +370,8 @@ namespace Formularios
                 switch (this.quieroModificar)
                 {
                     case true:
-                        if(ValidarCampos())
+                        if(ValidarCampos() && ModificarVehiculo())
                         {
-                            ModificarVehiculo();
                             MessageBox.Show("Modificación del vehículo con éxito.", "¡Información!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             this.Close();
                         }

@@ -1,0 +1,7 @@
+- Verificar las excepciones de los formularios, dar mensajes
+
+-falta eventos en clase camioneta y motocicleta
+
+-mejorar metodo mofificacion, codigo feo
+
+- chequear si funciona el metodo de extension, casteando el indice al EColor

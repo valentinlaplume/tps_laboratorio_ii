@@ -19,6 +19,11 @@ namespace Entidades
         int cantidadPuertas;
 
         public event Financiable InformarFinanciacion;
+
+        /// <summary>
+        /// Calcula financiacion del vehiculo dependiendo sus años de antiguedad
+        /// </summary>
+        /// <returns> Datos de financiacion </returns>
         private string GetNotificacionFinanciacion()
         {
             StringBuilder financiacion = new StringBuilder();

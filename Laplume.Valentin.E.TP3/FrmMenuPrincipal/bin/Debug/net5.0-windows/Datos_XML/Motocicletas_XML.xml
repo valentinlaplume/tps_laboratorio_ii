@@ -110,4 +110,15 @@
     <Estado>1</Estado>
     <Marca>Honda</Marca>
   </Motocicleta>
+  <Motocicleta>
+    <Nombre>moto prueba</Nombre>
+    <Año>2003</Año>
+    <Km>1211</Km>
+    <TipoCombustible>Nafta</TipoCombustible>
+    <TipoTransmision>Manual</TipoTransmision>
+    <Color>Negro</Color>
+    <Precio>6556</Precio>
+    <Estado>0</Estado>
+    <Marca>Honda</Marca>
+  </Motocicleta>
 </ArrayOfMotocicleta>

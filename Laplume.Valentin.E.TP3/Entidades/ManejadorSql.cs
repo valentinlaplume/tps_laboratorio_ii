@@ -21,7 +21,6 @@ namespace Entidades
             Comando = new SqlCommand();
             Comando.CommandType = CommandType.Text; // que tipo de query vas a ejecutar
             Comando.Connection = Conexion; // se agrega a donde se conecta, podes cambiar la Conexion
-
         }
 
         public static string GetQueryInsert(string tipoVehiculo)
@@ -224,6 +223,78 @@ namespace Entidades
             {
                 throw new Exception("Ocurrio un error al eliminar Vehículo en la Base de Datos.");
             }
+            finally
+            {
+                Conexion.Close();
+            }
+        }
+
+        public static bool ModificarVehiculo(string tipoVehiculo, Auto auto, Camioneta camioneta, Motocicleta moto)
+        {
+            try
+            {
+                Comando.Parameters.Clear();
+                int id = 0;
+
+                switch (tipoVehiculo)
+                {
+                    case "Auto":
+                        Comando.Parameters.AddWithValue("@marca", (int)auto.Marca);
+                        Comando.Parameters.AddWithValue("@nombre", auto.Nombre);
+                        Comando.Parameters.AddWithValue("@año", auto.Año);
+                        Comando.Parameters.AddWithValue("@km", auto.Km);
+                        Comando.Parameters.AddWithValue("@tipoCombustible", (int)auto.TipoCombustible);
+                        Comando.Parameters.AddWithValue("@tipoTransmision", (int)auto.TipoTransmision);
+                        Comando.Parameters.AddWithValue("@color", (int)auto.Color);
+                        Comando.Parameters.AddWithValue("@precio", auto.Precio);
+                        Comando.Parameters.AddWithValue("@cantidadPuertas", auto.CantidadPuertas);
+                        id = auto.Id;
+
+                        Comando.CommandText = $"UPDATE {tipoVehiculo}s SET marca = @marca, nombre = @nombre, año = @año, km = @km, tipoCombustible = @tipoCombustible, tipoTransmision = @tipoTransmision, color = @color, precio = @precio, cantidadPuertas = @cantidadPuertas WHERE id = {id}";
+                        break;
+                    case "Camioneta":
+                        Comando.Parameters.AddWithValue("@marca", (int)camioneta.Marca);
+                        Comando.Parameters.AddWithValue("@nombre", camioneta.Nombre);
+                        Comando.Parameters.AddWithValue("@año", camioneta.Año);
+                        Comando.Parameters.AddWithValue("@km", camioneta.Km);
+                        Comando.Parameters.AddWithValue("@tipoCombustible", (int)camioneta.TipoCombustible);
+                        Comando.Parameters.AddWithValue("@tipoTransmision", (int)camioneta.TipoTransmision);
+                        Comando.Parameters.AddWithValue("@color", (int)camioneta.Color);
+                        Comando.Parameters.AddWithValue("@precio", camioneta.Precio);
+                        Comando.Parameters.AddWithValue("@cantidadPuertas", camioneta.CantidadPuertas);
+                        id = camioneta.Id;
+
+                        Comando.CommandText = $"UPDATE {tipoVehiculo}s SET marca = @marca, nombre = @nombre, año = @año, km = @km, tipoCombustible = @tipoCombustible, tipoTransmision = @tipoTransmision, color = @color, precio = @precio, cantidadPuertas = @cantidadPuertas WHERE id = {id}";
+                        break;
+                    case "Motocicleta":
+                        Comando.Parameters.AddWithValue("@marca", (int)moto.Marca);
+                        Comando.Parameters.AddWithValue("@nombre", moto.Nombre);
+                        Comando.Parameters.AddWithValue("@año", moto.Año);
+                        Comando.Parameters.AddWithValue("@km", moto.Km);
+                        Comando.Parameters.AddWithValue("@tipoCombustible", (int)moto.TipoCombustible);
+                        Comando.Parameters.AddWithValue("@tipoTransmision", (int)moto.TipoTransmision);
+                        Comando.Parameters.AddWithValue("@color", (int)moto.Color);
+                        Comando.Parameters.AddWithValue("@precio", moto.Precio);
+                        id = moto.Id;
+
+                        Comando.CommandText = $"UPDATE {tipoVehiculo}s SET marca = @marca, nombre = @nombre, año = @año, km = @km, tipoCombustible = @tipoCombustible, tipoTransmision = @tipoTransmision, color = @color, precio = @precio WHERE id = {id}";
+                        break;
+                }
+
+                if (Conexion.State != ConnectionState.Open) { Conexion.Open(); }
+
+                if (Comando.ExecuteNonQuery() == 1) { return true; }
+
+                return false;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Ocurrio un error al modificar Vehículo en la Base de Datos.");
+            }
+            finally
+            {
+                Conexion.Close();
+            }
         }
 
         public static void Consulta(string query)
@@ -343,85 +414,6 @@ namespace Entidades
                 Conexion.Close();
             }
         }
-
-        //public static void LeerDatos(string query)
-        //{
-        //    try
-        //    {
-        //        // aca instancio la lista de lo que quiero leer
-        //        List<string> nombresAutos = new List<string>();
-        //        query = "SELECT Nombre FROM Autos";
-        //        Comando.CommandText = query;
-
-        //        if (Conexion.State != ConnectionState.Open)  { Conexion.Open(); }
-
-        //        Lector = Comando.ExecuteReader();
-        //        while (Lector.Read())
-        //        {
-        //            nombresAutos.Add(Lector["Nombre"].ToString());
-        //            //    int id;
-        //            //    string nombre;
-        //            //    int año;
-        //            //    int km;
-        //            //    ETipoCombustible tipoCombustible;
-        //            //    ETipoTransmision tipoTransmision;
-        //            //    EColor color;
-        //            //    float precio;
-        //            //    int estado;
-        //            //    EMarcaAutomovil marca;
-        //            //    int cantidadPuertas;
-        //            //}
-        //        }
-
-        //    }
-        //    catch (Exception)
-        //    {
-        //        throw new Exception("Fallo al leer datos desde la base de datos.");
-        //    }
-        //    finally
-        //    {
-        //        Conexion.Close();
-        //    }
-        //}
-
-
-        //public static List<Personas> Consulta()
-        //{
-        //    List<Personas> lista = new List<Personas>();
-        //    try
-        //    {
-        //        //Personas p = new Personas("", "");
-        //        //Personas p2 = new Personas($"{p.Id}", "");
-        //        Comando.CommandText = $"select * from personas";
-        //        Comando.Parameters.Clear();
-
-        //        if (Conexion.State != ConnectionState.Open)
-        //            Conexion.Open();
-
-        //        Lector = Comando.ExecuteReader();
-
-        //        while (Lector.Read())
-        //        {
-
-        //            lista.Add(new Personas(
-        //                               Lector["Dni"].ToString(),
-        //                               Lector["Nombre"].ToString()
-        //                                ));
-
-        //        }
-
-        //        return lista;
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw new Exception($"fallo la base: {ex.Message}");
-        //    }
-        //    finally
-        //    {
-        //        Conexion.Close();
-        //    }
-        //}
 
 
     }

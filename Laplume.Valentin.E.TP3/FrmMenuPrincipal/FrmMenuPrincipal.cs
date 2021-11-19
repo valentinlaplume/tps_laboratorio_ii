@@ -71,8 +71,10 @@ namespace FrmMenuPrincipal
 
             if (this.prg_BarraInicioPrograma.InvokeRequired)
             {
+                
                 this.prg_BarraInicioPrograma.BeginInvoke((MethodInvoker)delegate ()
                 {
+                
                     Concesionaria.listAutos = ManejadoraSql.GetAutos();
                     Concesionaria.listCamionetas = ManejadoraSql.GetCamionetas();
                     Concesionaria.listMotocicletas = ManejadoraSql.GetMotocicletas();
@@ -147,12 +149,14 @@ namespace FrmMenuPrincipal
         /// </summary>
         private void HabilitarMenuPrincipal()
         {
-            pb_Logo.Location = new Point(87, 3);
+            pb_Logo.Location = new Point(87, 9);
             pb_GuardarCambios.Visible = true;
             lbl_GuardarCambios.Visible = true;
+            this.Refresh();
             lbl_CargandoDatos.Visible = false;
             pb_Reportes.Visible = true;
             pb_ABMVehiculos.Visible = true;
+            this.Refresh();
             lbl_GuardarCambios.Visible = true;
             lbl_ABMVehiculos.Visible = true;
             lbl_Reportes.Visible = true;

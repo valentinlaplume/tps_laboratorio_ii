@@ -688,8 +688,7 @@ namespace Formularios
                     }
                     dgv_Vehiculos.Columns[0].Visible = false;
 
-                } else 
-                {
+                } else {
                     txt_KmHasta.Text = "";
                     throw new AtributoInvalidoException("Ingrese Kilómetros validos.", "txt_KmHasta, en Formulario Base Vehículos"); 
                 }
@@ -719,6 +718,8 @@ namespace Formularios
                 frmAlta.Text = "Alta de un Vehículo - VL MOTORS" + " - " + DateTime.Now.ToString("d");
                 frmAlta.lbl_Titulo.Text = "Alta de un Vehículo";
                 frmAlta.ShowDialog();
+                btn_Modificar.Enabled = false;
+                btn_Eliminar.Enabled = false;
                 dgv_Vehiculos.DataSource = null;
             }
             catch (Exception ex)
@@ -767,7 +768,6 @@ namespace Formularios
                     MessageBox.Show("Baja del vehículo realizada.", "¡Información!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     CargarVehiculosPorTipoVehiculo(cmb_TipoVehiculo.Text);
                 }
-
             }
             catch (Exception ex)
             {
@@ -811,15 +811,11 @@ namespace Formularios
                         Motocicleta motocicletaSeleccionada = (Motocicleta)vehiculoSeleccionado;
                         MessageBox.Show(motocicletaSeleccionada.MostrarDetalle());
                         break;
-                    default:
-                        throw new Exception("Error al obtener vehículo seleccionado.");
-
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                lbl_Errores.Visible = true;
-                lbl_Errores.Text = ex.Message;
+                throw new Exception("Error al obtener vehículo seleccionado."); ;
             }
         }
 
