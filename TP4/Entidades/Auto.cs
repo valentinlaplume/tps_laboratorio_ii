@@ -24,9 +24,11 @@ namespace Entidades
         /// Constructor estatico, inicializa el ultimo Id en 0
         /// </summary>
         static Auto()
-        { 
+        {
             ultimoId = 0;
         }
+
+        public Auto (){}
 
         public Auto(EMarcaAutomovil marca, string nombre, int año, int km, ETipoCombustible tipoCombustible, ETipoTransmision tipoTransmision,
                     EColor color, float precio,  int cantidadPuertas)

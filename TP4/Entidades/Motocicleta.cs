@@ -17,7 +17,6 @@ namespace Entidades
         private event Financiar InformarFinanciacion;
 
         #region Constructores
-        public Motocicleta() { }
 
         /// <summary>
         /// Constructor estatico, inicializa el ultimo Id en 0
@@ -26,6 +25,7 @@ namespace Entidades
         {
             ultimoId = 0;
         }
+        public Motocicleta() { }
 
         public Motocicleta(EMarcaMotocicleta marca, string nombre, int año, int km,
                            ETipoCombustible tipoCombustible, ETipoTransmision tipoTransmision,

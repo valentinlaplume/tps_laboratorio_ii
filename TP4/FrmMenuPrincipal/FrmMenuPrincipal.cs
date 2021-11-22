@@ -29,6 +29,7 @@ namespace FrmMenuPrincipal
             InitializeComponent();
         }
 
+        // Codigo inactivo
         #region TASK BARRA LOAD Y CARGA DE LISTAS DESDE LA DB
         //public bool BarraInicioSesion()
         //{
@@ -174,7 +175,6 @@ namespace FrmMenuPrincipal
                 //Concesionaria.listMotocicletas = Xml<Motocicleta>.LeerDatos("Motocicletas_XML");
                 #endregion
 
-               
                 flagCargueDatos = await CargarDatos();
                 if(flagCargueDatos)
                 {
@@ -184,6 +184,8 @@ namespace FrmMenuPrincipal
 
                 MessageBox.Show("Se cargaron los datos de los vehículos correctamente.", "¡Información!", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+                #region Codigo Inactivo
+
                 //cargaDatos.Start();
                 ////await Task.Run(Cargando);
                 //Concesionaria.listAutos = ManejadoraSql.GetAutos();
@@ -191,6 +193,7 @@ namespace FrmMenuPrincipal
                 //Concesionaria.listMotocicletas = ManejadoraSql.GetMotocicletas();
 
                 //await cargaDatos;
+                #endregion
             }
             catch (Exception ex)
             {

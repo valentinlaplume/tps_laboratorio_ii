@@ -28,6 +28,9 @@ namespace Entidades
             ultimoId = 0;
         }
 
+        public Camioneta() { }
+
+
         public Camioneta(EMarcaAutomovil marca, string nombre, int año, int km, ETipoCombustible tipoCombustible, ETipoTransmision tipoTransmision,
                          EColor color, float precio, int cantidadPuertas)
             : base (nombre, año, km, tipoCombustible, tipoTransmision, color, precio)

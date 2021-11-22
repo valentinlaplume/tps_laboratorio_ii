@@ -43,9 +43,9 @@ namespace Entidades
         protected override ETamanio Tamanio
         {
             get
-            {  
+            {
                 // Note que el Chevrolet IOP852 aparece como tamanio (Grande) en tu app ya andando
-                // Yo dejo como aclara el summay de Sedan, osea (Mediano)
+                // Yo dejo como aclara el summary de Sedan, osea (Mediano)
                 return ETamanio.Mediano;
             }
 

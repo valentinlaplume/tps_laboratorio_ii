@@ -36,23 +36,24 @@ namespace TestUnitario
         }
 
         /// <summary>
-        /// Lee de un archivo json una lista de autos, y verifica que no sea nulla
+        /// Lee de un archivo json una lista de Camionetas, y verifica que no sea nulla
         /// </summary>
-        //[TestMethod]
-        //public void LeerAutosJson_Test()
-        //{
-        //    // arrange
-        //    List<Auto> listAutosPrueba = new List<Auto>();
+        [TestMethod]
+        public void LeerAutosJson_Test()
+        {
+            // arrange
+            List<Camioneta> listPrueba = new List<Camioneta>();
 
-        //    // act
-        //    listAutosPrueba = Json<List<Auto>>.LeerDatos("Autos_JSON");
+            // act
+            listPrueba = Json<List<Camioneta>>.LeerDatos("Camionetas_JSON");
 
-        //    //assert
-        //    Assert.IsNotNull(listAutosPrueba);
-        //}
+            //assert
+            Assert.IsNotNull(listPrueba);
+        }
 
         /// <summary>
-        /// Lee desde la base de datos una lista de Motocicletas, y verifica que no sea nulla
+        /// Lee desde la base de datos una lista de Motocicletas,
+        /// y verifica que sea del tipo List<Motocicleta>
         /// </summary>
         [TestMethod]
         public void LeerMotocicletasBaseDatos_Test()
@@ -63,8 +64,8 @@ namespace TestUnitario
             // act
             listMotocicletasPrueba = ManejadoraSql.GetMotocicletas();
 
-            //assert
-            Assert.IsNotNull(listMotocicletasPrueba);
+            //Assert
+            Assert.IsInstanceOfType(listMotocicletasPrueba, typeof(List<Motocicleta>));
         }
 
         /// <summary>
@@ -83,5 +84,7 @@ namespace TestUnitario
             Assert.IsTrue(datoInsertado);
         }
 
+
+        
     }
 }

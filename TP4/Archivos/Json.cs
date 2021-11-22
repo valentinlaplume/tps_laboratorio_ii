@@ -19,7 +19,7 @@ namespace Archivos
             //path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             //path = Directory.GetCurrentDirectory();
             path = AppDomain.CurrentDomain.BaseDirectory;
-            path += @"\Datos_JSON\";
+            path += @"Datos_JSON\";
         }
 
         /// <summary>
