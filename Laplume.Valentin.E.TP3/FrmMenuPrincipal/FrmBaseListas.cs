@@ -201,40 +201,39 @@ namespace Formularios
                 switch (tipoVehiculo)
                 {
                     case "Motocicleta":
-                        cmb_MarcaAutomovil.Visible = false;
-                        cmb_MarcaMotocicleta.Visible = true;
-                        listMotocicletaReporte = Concesionaria.listMotocicletas.Where(c => c.Estado == 1).OrderBy(m => m.Nombre).ToList(); // .Where(m => m.Color == EColor.Rojo)
-                        dgv_Vehiculos.DataSource = listMotocicletaReporte;
+                        if(Concesionaria.listMotocicletas.Count > 0)
+                        {
+                            cmb_MarcaAutomovil.Visible = false;
+                            cmb_MarcaMotocicleta.Visible = true;
+                            listMotocicletaReporte = Concesionaria.listMotocicletas.Where(c => c.Estado == 1).OrderBy(m => m.Nombre).ToList(); // .Where(m => m.Color == EColor.Rojo)
+                            dgv_Vehiculos.DataSource = listMotocicletaReporte;
+                        }
                         break;
                     case "Auto":
-                        lbl_CantidadDePuertas.Visible = true;
-                        cmb_CantidadPuertas.Visible = true;
-                        listAutosReporte = Concesionaria.listAutos.Where(c => c.Estado == 1).OrderBy(m => m.Nombre).ToList();
-                        dgv_Vehiculos.DataSource = listAutosReporte;
+                        if (Concesionaria.listAutos.Count > 0)
+                        {
+                            lbl_CantidadDePuertas.Visible = true;
+                            cmb_CantidadPuertas.Visible = true;
+                            listAutosReporte = Concesionaria.listAutos.Where(c => c.Estado == 1).OrderBy(m => m.Nombre).ToList();
+                            dgv_Vehiculos.DataSource = listAutosReporte;
+                        }
                         break;
                     case "Camioneta":
-                        lbl_CantidadDePuertas.Visible = true;
-                        cmb_CantidadPuertas.Visible = true;
-                        listCamionetasReporte = Concesionaria.listCamionetas.Where(c => c.Estado == 1).OrderBy(m => m.Nombre).ToList();
-                        dgv_Vehiculos.DataSource = listCamionetasReporte;
+                        if (Concesionaria.listCamionetas.Count > 0)
+                        {
+                            lbl_CantidadDePuertas.Visible = true;
+                            cmb_CantidadPuertas.Visible = true;
+                            listCamionetasReporte = Concesionaria.listCamionetas.Where(c => c.Estado == 1).OrderBy(m => m.Nombre).ToList();
+                            dgv_Vehiculos.DataSource = listCamionetasReporte;
+                        }
                         break;
                 }
                 dgv_Vehiculos.Columns[0].Visible = false;
             }
-            catch (InvalidOperationException ex)
-            {
-                lbl_Errores.Visible = true;
-                lbl_Errores.Text = ex.Message;
-            }
-            catch (ArgumentNullException ex)
-            {
-                lbl_Errores.Visible = true;
-                lbl_Errores.Text = ex.Message;
-            }
             catch (Exception ex)
             {
                 lbl_Errores.Visible = true;
-                lbl_Errores.Text = ex.Message;
+                lbl_Errores.Text = $"Ocurrió un error al cargar lista de {tipoVehiculo}s.";
             }
         }
 
@@ -264,20 +263,10 @@ namespace Formularios
                 }
                 dgv_Vehiculos.Columns[0].Visible = false;
             }
-            catch (InvalidOperationException ex)
-            {
-                lbl_Errores.Visible = true;
-                lbl_Errores.Text = ex.Message;
-            }
-            catch (ArgumentNullException ex)
-            {
-                lbl_Errores.Visible = true;
-                lbl_Errores.Text = ex.Message;
-            }
             catch (Exception ex)
             {
                 lbl_Errores.Visible = true;
-                lbl_Errores.Text = ex.Message;
+                lbl_Errores.Text = $"Ocurrió un error al cargar lista por marca {marca}.";
             }
         }
 
@@ -298,20 +287,10 @@ namespace Formularios
                 dgv_Vehiculos.DataSource = listMotocicletaReporte;
                 dgv_Vehiculos.Columns[0].Visible = false;
             }
-            catch (InvalidOperationException ex)
-            {
-                lbl_Errores.Visible = true;
-                lbl_Errores.Text = ex.Message;
-            }
-            catch (ArgumentNullException ex)
-            {
-                lbl_Errores.Visible = true;
-                lbl_Errores.Text = ex.Message;
-            }
             catch (Exception ex)
             {
                 lbl_Errores.Visible = true;
-                lbl_Errores.Text = ex.Message;
+                lbl_Errores.Text = $"Ocurrió un error al cargar lista por marca {marca}.";
             }
         }
 
@@ -346,20 +325,10 @@ namespace Formularios
                 }
                 dgv_Vehiculos.Columns[0].Visible = false;
             }
-            catch (InvalidOperationException ex)
-            {
-                lbl_Errores.Visible = true;
-                lbl_Errores.Text = ex.Message;
-            }
-            catch (ArgumentNullException ex)
-            {
-                lbl_Errores.Visible = true;
-                lbl_Errores.Text = ex.Message;
-            }
             catch (Exception ex)
             {
                 lbl_Errores.Visible = true;
-                lbl_Errores.Text = ex.Message;
+                lbl_Errores.Text = $"Ocurrió un error al cargar lista por color {color}.";
             }
         }
 
@@ -388,20 +357,10 @@ namespace Formularios
                 }
                 dgv_Vehiculos.Columns[0].Visible = false;
             }
-            catch (InvalidOperationException ex)
-            {
-                lbl_Errores.Visible = true;
-                lbl_Errores.Text = ex.Message;
-            }
-            catch (ArgumentNullException ex)
-            {
-                lbl_Errores.Visible = true;
-                lbl_Errores.Text = ex.Message;
-            }
             catch (Exception ex)
             {
                 lbl_Errores.Visible = true;
-                lbl_Errores.Text = ex.Message;
+                lbl_Errores.Text = $"Ocurrió un error al cargar lista por cantidad de puertas [{cantPuertas}].";
             }
         }
 
@@ -435,20 +394,10 @@ namespace Formularios
                 }
                 dgv_Vehiculos.Columns[0].Visible = false;
             }
-            catch (InvalidOperationException ex)
-            {
-                lbl_Errores.Visible = true;
-                lbl_Errores.Text = ex.Message;
-            }
-            catch (ArgumentNullException ex)
-            {
-                lbl_Errores.Visible = true;
-                lbl_Errores.Text = ex.Message;
-            }
             catch (Exception ex)
             {
                 lbl_Errores.Visible = true;
-                lbl_Errores.Text = ex.Message;
+                lbl_Errores.Text = $"Ocurrió un error al cargar lista por tipo de combustible {tipoDeCombustible}.";
             }
         }
 
@@ -482,20 +431,10 @@ namespace Formularios
                 }
                 dgv_Vehiculos.Columns[0].Visible = false;
             }
-            catch (InvalidOperationException ex)
-            {
-                lbl_Errores.Visible = true;
-                lbl_Errores.Text = ex.Message;
-            }
-            catch (ArgumentNullException ex)
-            {
-                lbl_Errores.Visible = true;
-                lbl_Errores.Text = ex.Message;
-            }
             catch (Exception ex)
             {
                 lbl_Errores.Visible = true;
-                lbl_Errores.Text = ex.Message;
+                lbl_Errores.Text = $"Ocurrió un error al cargar lista por tipo de transmisión {tipoDeTransmision}.";
             }
         }
 
@@ -652,7 +591,7 @@ namespace Formularios
             catch (Exception ex)
             {
                 lbl_Errores.Visible = true;
-                lbl_Errores.Text = ex.Message;
+                lbl_Errores.Text = "Ocurrió un error. Ingrese Precio valido.";
             }
         }
 
@@ -701,7 +640,7 @@ namespace Formularios
             catch (Exception ex)
             {
                 lbl_Errores.Visible = true;
-                lbl_Errores.Text = ex.Message;
+                lbl_Errores.Text = "Ocurrió un error. Ingrese Kilómetros validos.";
             }
         }
 
@@ -761,7 +700,7 @@ namespace Formularios
             try
             {
                 Vehiculo vehiculoBaja = GetVehiculoSeleccionado();
-                bool okDeleteDB =  ManejadoraSql.DeleteAuto(cmb_TipoVehiculo.Text, GetIdVehiculoSeleccionado());
+                bool okDeleteDB =  ManejadoraSql.DeleteVehiculo(cmb_TipoVehiculo.Text, GetIdVehiculoSeleccionado());
                 vehiculoBaja.Estado = 0;
                 if (vehiculoBaja.Estado == 0 && okDeleteDB)
                 {
@@ -772,7 +711,7 @@ namespace Formularios
             catch (Exception ex)
             {
                 lbl_Errores.Visible = true;
-                lbl_Errores.Text = ex.Message;
+                lbl_Errores.Text = "Ocurrió un error al querer dar de baja el vehiculo.";
             }
         }
 
@@ -815,7 +754,7 @@ namespace Formularios
             }
             catch (Exception)
             {
-                throw new Exception("Error al obtener vehículo seleccionado."); ;
+                throw new Exception("Error al obtener vehículo seleccionado.");
             }
         }
 

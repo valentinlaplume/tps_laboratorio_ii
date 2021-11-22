@@ -80,15 +80,21 @@ namespace Formularios
                 Array marcasAutomoviles = Enum.GetNames(typeof(EMarcaAutomovil));
                 foreach (string marca in marcasAutomoviles)
                 {
-                    int cantidadParcialAutos = Concesionaria.listAutos.Where(x => x.Marca.ToString() == marca).ToList().Count();
-                    AddDatosEstadisticosListBox($"AUTOS {marca}: % " +
-                    $"{GetPorcentaje(cantidadParcialAutos, Concesionaria.CantidadAutos)} ({cantidadParcialAutos} de {Concesionaria.CantidadAutos})");
+                    if(Concesionaria.CantidadAutos > 0)
+                    {
+                        int cantidadParcialAutos = Concesionaria.listAutos.Where(x => x.Marca.ToString() == marca).ToList().Count();
+                        AddDatosEstadisticosListBox($"AUTOS {marca}: % " +
+                        $"{GetPorcentaje(cantidadParcialAutos, Concesionaria.CantidadAutos)} ({cantidadParcialAutos} de {Concesionaria.CantidadAutos})");
+                    }
 
-                    int cantidadParcialCamionetas = Concesionaria.listCamionetas.Where(x => x.Marca.ToString() == marca).ToList().Count();
-                    AddDatosEstadisticosListBox($"CAMIONETAS {marca}: % " +
-                    $"{GetPorcentaje(cantidadParcialCamionetas, Concesionaria.CantidadCamionetas)} ({cantidadParcialCamionetas} de {Concesionaria.CantidadCamionetas})");
-                    AddDatosEstadisticosListBox("");
+                    if(Concesionaria.CantidadCamionetas > 0)
+                    {
+                        int cantidadParcialCamionetas = Concesionaria.listCamionetas.Where(x => x.Marca.ToString() == marca).ToList().Count();
+                        AddDatosEstadisticosListBox($"CAMIONETAS {marca}: % " +
+                        $"{GetPorcentaje(cantidadParcialCamionetas, Concesionaria.CantidadCamionetas)} ({cantidadParcialCamionetas} de {Concesionaria.CantidadCamionetas})");
+                    }
                 }
+                AddDatosEstadisticosListBox("");
                 #endregion
 
                 #region MARCA MOTOCICLETA
@@ -96,9 +102,12 @@ namespace Formularios
                 Array marcasMotocicletas = Enum.GetNames(typeof(EMarcaMotocicleta));
                 foreach (string marca in marcasMotocicletas)
                 {
-                    int cantidadParcialAutos = Concesionaria.listMotocicletas.Where(x => x.Marca.ToString() == marca).ToList().Count();
-                    AddDatosEstadisticosListBox($"{marca}: % " +
-                    $"{GetPorcentaje(cantidadParcialAutos, Concesionaria.CantidadMotocicletas)} ({cantidadParcialAutos} de {Concesionaria.CantidadMotocicletas})");
+                    if(Concesionaria.CantidadMotocicletas > 0)
+                    {
+                        int cantidadParcialAutos = Concesionaria.listMotocicletas.Where(x => x.Marca.ToString() == marca).ToList().Count();
+                        AddDatosEstadisticosListBox($"{marca}: % " +
+                        $"{GetPorcentaje(cantidadParcialAutos, Concesionaria.CantidadMotocicletas)} ({cantidadParcialAutos} de {Concesionaria.CantidadMotocicletas})");
+                    }
                 }
                 AddDatosEstadisticosListBox("");
                 #endregion

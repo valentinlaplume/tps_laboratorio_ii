@@ -268,7 +268,7 @@ namespace Formularios
             this.btn_Accion.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btn_Accion.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btn_Accion.Font = new System.Drawing.Font("Calibri", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btn_Accion.Location = new System.Drawing.Point(356, 282);
+            this.btn_Accion.Location = new System.Drawing.Point(356, 242);
             this.btn_Accion.Name = "btn_Accion";
             this.btn_Accion.Size = new System.Drawing.Size(101, 30);
             this.btn_Accion.TabIndex = 10;

@@ -17,10 +17,10 @@ using System.Threading;
 
 namespace FrmMenuPrincipal
 {
-
-   
     public partial class FrmMenuPrincipal : FrmDatos
     {
+        static bool flagCargueDatos = false;
+
         /// <summary>
         /// Constructor por defecto sin parametros
         /// </summary>
@@ -30,87 +30,132 @@ namespace FrmMenuPrincipal
         }
 
         #region TASK BARRA LOAD Y CARGA DE LISTAS DESDE LA DB
-        public bool BarraInicioSesion()
-        {
-            bool retorno = false;
-            if (this.prg_BarraInicioPrograma.InvokeRequired)
-            {
-                this.prg_BarraInicioPrograma.BeginInvoke((MethodInvoker)delegate ()
-                {
-                    Concesionaria.listAutos = ManejadoraSql.GetAutos();
-                    Concesionaria.listCamionetas = ManejadoraSql.GetCamionetas();
-                    Concesionaria.listMotocicletas = ManejadoraSql.GetMotocicletas();
+        //public bool BarraInicioSesion()
+        //{
+        //    bool retorno = false;
+        //    if (this.prg_BarraInicioPrograma.InvokeRequired)
+        //    {
+        //        this.prg_BarraInicioPrograma.BeginInvoke((MethodInvoker)delegate ()
+        //        {
+        //            Concesionaria.listAutos = ManejadoraSql.GetAutos();
+        //            Concesionaria.listCamionetas = ManejadoraSql.GetCamionetas();
+        //            Concesionaria.listMotocicletas = ManejadoraSql.GetMotocicletas();
 
-                    prg_BarraInicioPrograma.Minimum = 1;
-                    prg_BarraInicioPrograma.Maximum = 10000;
-                    prg_BarraInicioPrograma.Step = 2;
-                    for (int i = 0; i < 15000; i++)
-                    {
-                        prg_BarraInicioPrograma.PerformStep();
-                        if (i == 14999)
-                            retorno = true;
-                    }
+        //            prg_BarraInicioPrograma.Minimum = 1;
+        //            prg_BarraInicioPrograma.Maximum = 10000;
+        //            prg_BarraInicioPrograma.Step = 2;
+        //            for (int i = 0; i < 15000; i++)
+        //            {
+        //                prg_BarraInicioPrograma.PerformStep();
+        //                if (i == 14999)
+        //                    retorno = true;
+        //            }
 
-                    prg_BarraInicioPrograma.Visible = false;
-                    this.Refresh();
-                    if (this.lbl_CargandoDatos.InvokeRequired)
-                    {
-                        this.lbl_CargandoDatos.BeginInvoke((MethodInvoker)delegate ()
-                        {
-                            lbl_CargandoDatos.Visible = false;
-                            this.Refresh();
-                        });
-                    }
-                });
-            }
-            return retorno;
-        }
+        //            prg_BarraInicioPrograma.Visible = false;
+        //            this.Refresh();
+        //            if (this.lbl_CargandoDatos.InvokeRequired)
+        //            {
+        //                this.lbl_CargandoDatos.BeginInvoke((MethodInvoker)delegate ()
+        //                {
+        //                    lbl_CargandoDatos.Visible = false;
+        //                    this.Refresh();
+        //                });
+        //            }
+        //        });
+        //    }
+        //    return retorno;
+        //}
 
-        private bool Cargando()
-        {
+        //private void Cargando()
+        //{
+        //    if (this.prg_BarraInicioPrograma.InvokeRequired)
+        //    {
 
-            if (this.prg_BarraInicioPrograma.InvokeRequired)
-            {
-                
-                this.prg_BarraInicioPrograma.BeginInvoke((MethodInvoker)delegate ()
-                {
-                
-                    Concesionaria.listAutos = ManejadoraSql.GetAutos();
-                    Concesionaria.listCamionetas = ManejadoraSql.GetCamionetas();
-                    Concesionaria.listMotocicletas = ManejadoraSql.GetMotocicletas();
+        //        this.prg_BarraInicioPrograma.BeginInvoke((MethodInvoker)delegate ()
+        //        {
 
-                    prg_BarraInicioPrograma.Minimum = 1;
-                    prg_BarraInicioPrograma.Maximum = 10;
-                    prg_BarraInicioPrograma.Step = 2;
-                    this.Refresh();
+        //            Concesionaria.listAutos = ManejadoraSql.GetAutos();
+        //            Concesionaria.listCamionetas = ManejadoraSql.GetCamionetas();
+        //            Concesionaria.listMotocicletas = ManejadoraSql.GetMotocicletas();
 
-                    for (int i = 100; i < 1000;)
-                    {
-                        Thread.Sleep(i);
-                        prg_BarraInicioPrograma.PerformStep();
-                        this.Refresh();
-                        i += 100;
-                    }
+        //            prg_BarraInicioPrograma.Minimum = 1;
+        //            prg_BarraInicioPrograma.Maximum = 10;
+        //            prg_BarraInicioPrograma.Step = 2;
+        //            this.Refresh();
 
-                    prg_BarraInicioPrograma.Visible = false;
-                    this.Refresh();
-                    if (this.lbl_CargandoDatos.InvokeRequired){
-                        this.lbl_CargandoDatos.BeginInvoke((MethodInvoker)delegate ()
-                        {
-                            lbl_CargandoDatos.Visible = false;
-                            this.Refresh();
-                        });
-                    }
-                });
-            }
-            else
-            {
-                this.Refresh();
-            }
+        //            for (int i = 100; i < 1000;)
+        //            {
+        //                Thread.Sleep(i);
+        //                prg_BarraInicioPrograma.PerformStep();
+        //                this.Refresh();
+        //                i += 100;
+        //            }
 
-            return true;
-        }
+        //            prg_BarraInicioPrograma.Visible = false;
+
+        //            this.Refresh();
+        //            if (this.lbl_CargandoDatos.InvokeRequired){
+        //                this.lbl_CargandoDatos.BeginInvoke((MethodInvoker)delegate ()
+        //                {
+        //                    lbl_CargandoDatos.Visible = false;
+        //                    this.Refresh();
+        //                });
+        //            }
+        //        });
+        //    }
+        //    else
+        //    {
+        //        this.Refresh();
+        //    }
+
+        //    //return true;
+        //}
         #endregion
+
+        private async Task<bool> CargarDatos()
+        {
+            try
+            {
+                return await Task.Run(() => { 
+
+                    Thread.Sleep(15000);
+                    Concesionaria.listAutos = ManejadoraSql.GetAutos();
+                    Concesionaria.listCamionetas = ManejadoraSql.GetCamionetas();
+                    Concesionaria.listMotocicletas = ManejadoraSql.GetMotocicletas();
+
+                    #region Codigo inactivo
+                    //if (this.pb_CargandoDatos.InvokeRequired){
+                    //    this.pb_CargandoDatos.BeginInvoke((MethodInvoker) delegate ()
+                    //    {
+                    //        Concesionaria.listAutos = ManejadoraSql.GetAutos();
+                    //        Concesionaria.listCamionetas = ManejadoraSql.GetCamionetas();
+                    //        Concesionaria.listMotocicletas = ManejadoraSql.GetMotocicletas();
+
+
+                    //        this.pb_CargandoDatos.Visible = false;
+                    //        this.Refresh();
+
+                    //    });
+                    //}
+
+                    //if (this.lbl_CargandoDatos.InvokeRequired){
+                    //    this.lbl_CargandoDatos.BeginInvoke((MethodInvoker)delegate ()
+                    //    {
+                    //        lbl_CargandoDatos.Visible = false;
+                    //        this.Refresh();
+                    //    });
+                    //}
+                    #endregion
+
+                    return true;
+
+                }); // Fin Task
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
 
         /// <summary>
         /// Evento load, carga las listas desde la base de datos
@@ -122,45 +167,35 @@ namespace FrmMenuPrincipal
         {
             try
             {
-                // codigo inactivo
+                // Codigo Inactivo
                 #region CARGA DE LISTAS POR MEDIO DE ARCHIVOS
                 //Concesionaria.listAutos = Json<List<Auto>>.LeerDatos("Autos_JSON");
                 //Concesionaria.listCamionetas = Json<List<Camioneta>>.LeerDatos("Camionetas_JSON");
                 //Concesionaria.listMotocicletas = Xml<Motocicleta>.LeerDatos("Motocicletas_XML");
                 #endregion
 
-                // label.InvokeRequired (te dice si estas en el hilo del control ese, propiedad del control)
-                // label.BeginInvoke(delegado que se ejecuta de forma asincrona y nos une con la parte del hilo principal donde se unen las cosas, osea el control de donde fue creado)
-                //await Task.Run(CargarDatosVehiculos);
-                //tareaCargarDatos.Start();
+               
+                flagCargueDatos = await CargarDatos();
+                if(flagCargueDatos)
+                {
+                    this.pb_CargandoDatos.Visible = false;
+                    lbl_CargandoDatos.Visible = false;
+                }
 
-                await Task.Run(Cargando);
-                HabilitarMenuPrincipal();
+                MessageBox.Show("Se cargaron los datos de los vehículos correctamente.", "¡Información!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                //cargaDatos.Start();
+                ////await Task.Run(Cargando);
+                //Concesionaria.listAutos = ManejadoraSql.GetAutos();
+                //Concesionaria.listCamionetas = ManejadoraSql.GetCamionetas();
+                //Concesionaria.listMotocicletas = ManejadoraSql.GetMotocicletas();
+
+                //await cargaDatos;
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "¡Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-
-        /// <summary>
-        /// Muestra lo necesario del funcionamiento del programa,
-        /// luego de cargar los datos de la task
-        /// </summary>
-        private void HabilitarMenuPrincipal()
-        {
-            pb_Logo.Location = new Point(87, 9);
-            pb_GuardarCambios.Visible = true;
-            lbl_GuardarCambios.Visible = true;
-            this.Refresh();
-            lbl_CargandoDatos.Visible = false;
-            pb_Reportes.Visible = true;
-            pb_ABMVehiculos.Visible = true;
-            this.Refresh();
-            lbl_GuardarCambios.Visible = true;
-            lbl_ABMVehiculos.Visible = true;
-            lbl_Reportes.Visible = true;
-            this.Refresh();
         }
 
         /// <summary>
@@ -183,11 +218,17 @@ namespace FrmMenuPrincipal
         /// <param name="e"></param>
         private void pb_Reportes_Click(object sender, EventArgs e)
         {
-            //FrmBaseListas frmReportes = new FrmBaseListas();
-            FrmReportes frmReportes = new FrmReportes(); 
-            frmReportes.Text = "Reportes - VL MOTORS" + " - " + DateTime.Now.ToString("d");
-            Console.Beep(100, 400);
-            frmReportes.ShowDialog();
+            if (!flagCargueDatos)
+            {
+                MessageBox.Show("Aún no se terminaron de cargar los datos de los vehículos.", "¡Advertencia!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                FrmReportes frmReportes = new FrmReportes();
+                frmReportes.Text = "Reportes - VL MOTORS" + " - " + DateTime.Now.ToString("d");
+                Console.Beep(100, 400);
+                frmReportes.ShowDialog();
+            }
         }
 
         /// <summary>

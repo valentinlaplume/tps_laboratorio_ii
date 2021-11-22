@@ -13,6 +13,9 @@ namespace Entidades
         static SqlCommand Comando; // lleva la consulta
         static SqlDataReader Lector;
 
+        /// <summary>
+        /// Constructor estático, iniciliza variables las cuales son utlizadas con la base de datos
+        /// </summary>
         static ManejadoraSql()
         {
             Conexion = new SqlConnection();
@@ -23,22 +26,7 @@ namespace Entidades
             Comando.Connection = Conexion; // se agrega a donde se conecta, podes cambiar la Conexion
         }
 
-        public static string GetQueryInsert(string tipoVehiculo)
-        {
-            string query = "";
-            switch (tipoVehiculo.ToLower().Trim())
-            {
-                case "auto":
-                case "camioneta":
-                    query = $"INSERT INTO {tipoVehiculo}s VALUES (@marca, @nombre, @año, @km, @tipoCombustible, @tipoTransmision, @color, @precio, @cantidadPuertas)";
-                    break;
-                case "motocicleta":
-                    query = $"INSERT INTO {tipoVehiculo}s VALUES (@marca, @nombre, @año, @km, @tipoCombustible, @tipoTransmision, @color, @precio)";
-                    break;
-            }
-
-            return query;
-        } // ver si sacar !!!!!
+        #region Metodos no usados
 
         public static bool InsertarAutos(List<Auto> autos)
         {
@@ -104,6 +92,13 @@ namespace Entidades
 
         }
 
+        #endregion
+
+        /// <summary>
+        /// Agrega un Auto a la tabla Autos
+        /// </summary>
+        /// <param name="auto"></param>
+        /// <returns> si la operacion fue correcta retorna true, de lo contrario false </returns>
         public static bool InsertarAuto(Auto auto)
         {
             try
@@ -139,6 +134,11 @@ namespace Entidades
             }
 
         }
+        /// <summary>
+        /// Agrega una Camioneta a la tabla Camionetas
+        /// </summary>
+        /// <param name="auto"></param>
+        /// <returns> si la operacion fue correcta retorna true, de lo contrario false </returns>
         public static bool InsertarCamioneta(Camioneta camioneta)
         {
             try
@@ -173,6 +173,11 @@ namespace Entidades
             }
 
         }
+        /// <summary>
+        /// Agrega una Motocicleta a la tabla Motocicletas
+        /// </summary>
+        /// <param name="auto"></param>
+        /// <returns> si la operacion fue correcta retorna true, de lo contrario false </returns>
         public static bool InsertarMotocicleta(Motocicleta moto)
         {
             try
@@ -206,7 +211,12 @@ namespace Entidades
 
         }
 
-        public static bool DeleteAuto(string tipoVehiculo, int id)
+
+        /// <summary>
+        /// Baja logica de un vehiculo, deja campo estado en 0
+        /// </summary>
+        /// <returns></returns>
+        public static bool DeleteVehiculo(string tipoVehiculo, int id)
         {
             try
             {
@@ -229,6 +239,10 @@ namespace Entidades
             }
         }
 
+        /// <summary>
+        /// Modifica un vehiculo
+        /// </summary>
+        /// <returns></returns>
         public static bool ModificarVehiculo(string tipoVehiculo, Auto auto, Camioneta camioneta, Motocicleta moto)
         {
             try
@@ -297,28 +311,17 @@ namespace Entidades
             }
         }
 
-        public static void Consulta(string query)
-        {
-            try
-            {
-                
-            }
-            catch(Exception)
-            {
-                throw new Exception("Fallo en la consulta con la base de datos.");
-            }
-            finally
-            {
-                Conexion.Close();
-            }
-        }
-
+        /// <summary>
+        /// Obtiene lista de Auto
+        /// </summary>
+        /// <returns>  lista de autos </returns>
         public static List<Auto> GetAutos()
         {
             try
             {
-                List<Auto> autosLeidos = new List<Auto>(); // aca instancio la lista de lo que quiero leer
-                Comando.CommandText = "SELECT * FROM Autos WHERE estado = 1";
+                List<Auto> autosLeidos = new List<Auto>(); 
+                //Comando.CommandText = "SELECT * FROM Autos WHERE estado = 1";
+                Comando.CommandText = "SELECT * FROM Autos WHERE nombre <> 'InsertarAuto_Test' AND estado = 1";
 
                 if (Conexion.State != ConnectionState.Open) { Conexion.Open(); }
 
@@ -340,13 +343,17 @@ namespace Entidades
             }
             catch (Exception)
             {
-                throw new Exception("Fallo al leer datos desde la base de datos.");
+                throw new Exception("Fallo al leer datos de Autos desde la base de datos.");
             }
             finally
             {
                 Conexion.Close();
             }
         }
+        /// <summary>
+        /// Obtiene lista de Camionetas
+        /// </summary>
+        /// <returns> lista de Camionetas </returns>
         public static List<Camioneta> GetCamionetas()
         {
             try
@@ -374,18 +381,22 @@ namespace Entidades
             }
             catch (Exception)
             {
-                throw new Exception("Fallo al leer datos desde la base de datos.");
+                throw new Exception("Fallo al leer datos de Camionetas desde la base de datos.");
             }
             finally
             {
                 Conexion.Close();
             }
         }
+        /// <summary>
+        /// Obtiene lista de Motocicletas
+        /// </summary>
+        /// <returns> lista de Motocicletas </returns>
         public static List<Motocicleta> GetMotocicletas()
         {
             try
             {
-                List<Motocicleta> camionetasLeidas = new List<Motocicleta>(); // aca instancio la lista de lo que quiero leer
+                List<Motocicleta> camionetasLeidas = new List<Motocicleta>(); 
                 Comando.CommandText = "SELECT * FROM Motocicletas WHERE estado = 1";
 
                 if (Conexion.State != ConnectionState.Open) { Conexion.Open(); }
@@ -407,7 +418,7 @@ namespace Entidades
             }
             catch (Exception)
             {
-                throw new Exception("Fallo al leer datos desde la base de datos.");
+                throw new Exception("Fallo al leer datos de Motocicletas desde la base de datos.");
             }
             finally
             {
@@ -415,6 +426,35 @@ namespace Entidades
             }
         }
 
+        /// <summary>
+        /// Obtiene ID Max del tipo de vehiculo pasado
+        /// </summary>
+        /// <returns> ID Max del tipo de vehiculo pasado </returns>
+        public static int GetIdMaxVehiculo(string tipoVehiculo)
+        {
+            try
+            {
+                int idMax = 0;
+                Comando.CommandText = $"SELECT MAX(id) idMax FROM {tipoVehiculo}s";
+
+                if (Conexion.State != ConnectionState.Open) { Conexion.Open(); }
+
+                Lector = Comando.ExecuteReader();
+                while (Lector.Read())
+                {
+                    idMax = (int)Lector["idMax"];
+                }
+                return idMax;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Fallo al leer id Max de {tipoVehiculo}s desde la base de datos.");
+            }
+            finally
+            {
+                Conexion.Close();
+            }
+        }
 
     }
 }

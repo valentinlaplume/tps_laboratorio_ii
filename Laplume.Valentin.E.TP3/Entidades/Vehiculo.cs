@@ -1,6 +1,7 @@
 ﻿using Entidades.Enumerados;
 using Excepciones;
 using System;
+using System.Text;
 
 namespace Entidades
 {
@@ -15,9 +16,7 @@ namespace Entidades
         float precio;
         int estado;
 
-        public Vehiculo()
-        {
-        }
+        public Vehiculo() { }
 
         public Vehiculo(string nombre, int año, int km, ETipoCombustible tipoCombustible,
                         ETipoTransmision tipoTransmision, EColor color, float precio)
@@ -34,7 +33,7 @@ namespace Entidades
 
         public abstract string MostrarEnFormatoCSV();
         public abstract string MostrarDetalle();
-
+        public abstract string GetCaracteristicasFinanciacion();
 
         public string Nombre
         {

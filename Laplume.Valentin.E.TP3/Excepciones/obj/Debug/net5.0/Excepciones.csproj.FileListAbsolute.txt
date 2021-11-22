@@ -26,7 +26,6 @@ C:\Users\valentin\Desktop\TP4\tps_laboratorio_ii-master\Laplume.Valentin.E.TP3\E
 C:\Users\valentin\Desktop\TP4\tps_laboratorio_ii-master\Laplume.Valentin.E.TP3\Excepciones\bin\Debug\net5.0\Excepciones.dll
 C:\Users\valentin\Desktop\TP4\tps_laboratorio_ii-master\Laplume.Valentin.E.TP3\Excepciones\bin\Debug\net5.0\ref\Excepciones.dll
 C:\Users\valentin\Desktop\TP4\tps_laboratorio_ii-master\Laplume.Valentin.E.TP3\Excepciones\bin\Debug\net5.0\Excepciones.pdb
-C:\Users\valentin\Desktop\TP4\tps_laboratorio_ii-master\Laplume.Valentin.E.TP3\Excepciones\obj\Debug\net5.0\Excepciones.csproj.AssemblyReference.cache
 C:\Users\valentin\Desktop\TP4\tps_laboratorio_ii-master\Laplume.Valentin.E.TP3\Excepciones\obj\Debug\net5.0\Excepciones.GeneratedMSBuildEditorConfig.editorconfig
 C:\Users\valentin\Desktop\TP4\tps_laboratorio_ii-master\Laplume.Valentin.E.TP3\Excepciones\obj\Debug\net5.0\Excepciones.AssemblyInfoInputs.cache
 C:\Users\valentin\Desktop\TP4\tps_laboratorio_ii-master\Laplume.Valentin.E.TP3\Excepciones\obj\Debug\net5.0\Excepciones.AssemblyInfo.cs

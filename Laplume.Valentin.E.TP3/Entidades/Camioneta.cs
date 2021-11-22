@@ -16,6 +16,10 @@ namespace Entidades
         EMarcaAutomovil marca;
         int cantidadPuertas;
 
+        event Financiar InformarFinanciacion;
+
+        #region Constructores
+
         /// <summary>
         /// Constructor estatico, inicializa el ultimo Id en 0
         /// </summary>
@@ -28,11 +32,20 @@ namespace Entidades
                          EColor color, float precio, int cantidadPuertas)
             : base (nombre, año, km, tipoCombustible, tipoTransmision, color, precio)
         {
-            this.id = ultimoId + 1;
-            ultimoId = this.id;
+            try
+            {
+                ultimoId = ManejadoraSql.GetIdMaxVehiculo("Camioneta");
+                this.id = ultimoId + 1;
+                ultimoId = this.id;
 
-            this.Marca = marca;
-            this.cantidadPuertas = cantidadPuertas;
+                this.Marca = marca;
+                this.cantidadPuertas = cantidadPuertas;
+                InformarFinanciacion += GetCaracteristicasFinanciacion;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         /// <summary>
@@ -48,7 +61,11 @@ namespace Entidades
 
             this.Marca = marca;
             this.cantidadPuertas = cantidadPuertas;
+            InformarFinanciacion += GetCaracteristicasFinanciacion;
         }
+        #endregion
+
+        #region Propiedades
 
         public int Id
         {
@@ -78,6 +95,39 @@ namespace Entidades
                     this.marca = value;
             }
         }
+        #endregion
+
+        #region Métodos
+
+        /// <summary>
+        /// Calcula financiacion del vehiculo, arma el texto y lo retorna.
+        /// </summary>
+        /// <returns> Datos de financiacion </returns>
+        public override string GetCaracteristicasFinanciacion()
+        {
+            StringBuilder financiacion = new StringBuilder();
+            int añosVehiculo = int.Parse(DateTime.Now.ToString("yyyy")) - this.Año;
+
+            Financiacion.GetCuotasYRecargo(añosVehiculo, out int cuotas, out int porcentajeRecargo);
+
+            if (this.Km == 0)
+                porcentajeRecargo += 5;
+
+            float precioFinalVehiculo = Financiacion.GetPrecioFinalConRecargo(porcentajeRecargo, this.Precio);
+
+            int añosCuotas = Financiacion.GetAñosCuotas(cuotas);
+
+            float pagoPorCuota = Financiacion.GetPagoPorCuotas(precioFinalVehiculo, cuotas);
+
+            financiacion.AppendLine($"Financiable en {cuotas} cuotas de $ {pagoPorCuota}.");
+            financiacion.Append($"Con un recargo del % {porcentajeRecargo}");
+            if (this.Km == 0) { financiacion.AppendLine(", de los cuales % 5 son impuestos por ser 0 Km."); } else { financiacion.AppendLine("."); }
+            financiacion.Append($"Precio final del Vehículo: $ {precioFinalVehiculo}, a pagar en {añosCuotas} ");
+            if (añosCuotas == 1) { financiacion.Append("año."); } else { financiacion.AppendLine("años."); }
+
+            return financiacion.ToString();
+        }
+
         public override string MostrarDetalle()
         {
             StringBuilder sw = new StringBuilder();
@@ -90,6 +140,9 @@ namespace Entidades
             sw.AppendLine($"Color: {Color}");
             sw.AppendLine($"Precio: $ {Precio}");
             sw.Append($"Cantidad de puertas: {cantidadPuertas}");
+            sw.AppendLine("");
+            sw.AppendLine("");
+            sw.Append(InformarFinanciacion.Invoke());
             return sw.ToString();
         }
         public override string MostrarEnFormatoCSV()
@@ -106,6 +159,8 @@ namespace Entidades
                           $"{CantidadPuertas}");
             return sw.ToString();
         }
+        #endregion
+
     }
 
 }

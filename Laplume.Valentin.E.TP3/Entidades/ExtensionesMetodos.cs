@@ -17,46 +17,39 @@ namespace Entidades
         /// <returns> El color que mas abunda en la lista de Motocicletas </returns>
         public static string MaxColor(this List<Motocicleta> motocicletas)
         {
-            string[] arrayColores = Enum.GetNames(typeof(EColor));
-            int cantidadColores = arrayColores.Length;
-            int[] posicionColores = new int[cantidadColores];
-
-            for (int i = 0; i < cantidadColores; i++) { posicionColores[i] = 0; }
-
-            foreach (Motocicleta item in motocicletas)
+            if(motocicletas.Where(x => x.Estado == 1).ToList().Count > 0)
             {
-                for (int i = 0; i < cantidadColores; i++)
+                string[] arrayColores = Enum.GetNames(typeof(EColor));
+                int cantidadColores = arrayColores.Length;
+                int[] posicionColores = new int[cantidadColores];
+
+                for (int i = 0; i < cantidadColores; i++) { posicionColores[i] = 0; }
+
+                foreach (Motocicleta item in motocicletas)
                 {
-                    if (item.Estado == 1 && (int)item.Color == i)
+                    for (int i = 0; i < cantidadColores; i++)
                     {
-                        posicionColores[i]++;
-                        break;
+                        if (item.Estado == 1 && (int)item.Color == i)
+                        {
+                            posicionColores[i]++;
+                            break;
+                        }
                     }
                 }
-            }
 
-            int repiteMax = posicionColores[0];
-            int indiceMax = 0;
-            for (int i = 0; i < posicionColores.Length; i++)
-            {
-                if (posicionColores[i] > repiteMax)
+                int repiteMax = posicionColores[0];
+                int indiceMax = 0;
+                for (int i = 0; i < posicionColores.Length; i++)
                 {
-                    repiteMax = posicionColores[i];
-                    indiceMax = i;
+                    if (posicionColores[i] > repiteMax)
+                    {
+                        repiteMax = posicionColores[i];
+                        indiceMax = i;
+                    }
                 }
+                return ((EColor)indiceMax).ToString();
             }
-
-            Array colores = Enum.GetValues(typeof(EColor));
-            string colorMasRepetido = "";
-            foreach (EColor item in colores)
-            {
-                if ((int)item == indiceMax)
-                {
-                    colorMasRepetido = item.ToString();
-                    break;
-                }
-            }
-            return colorMasRepetido;
+            return "No hay Motocicletas en la Concesionaria.";
         }
 
         /// <summary>
@@ -66,46 +59,39 @@ namespace Entidades
         /// <returns> El color que mas abunda en la lista de Autos </returns>
         public static string MaxColor(this List<Auto> autos)
         {
-            string[] arrayColores = Enum.GetNames(typeof(EColor));
-            int cantidadColores = arrayColores.Length;
-            int[] posicionColores = new int[cantidadColores];
-
-            for (int i = 0; i < cantidadColores; i++) { posicionColores[i] = 0; }
-
-            foreach (Auto item in autos)
+            if (autos.Where(x => x.Estado == 1).ToList().Count > 0)
             {
-                for (int i = 0; i < cantidadColores; i++)
+                string[] arrayColores = Enum.GetNames(typeof(EColor));
+                int cantidadColores = arrayColores.Length;
+                int[] posicionColores = new int[cantidadColores];
+
+                for (int i = 0; i < cantidadColores; i++) { posicionColores[i] = 0; }
+
+                foreach (Auto item in autos)
                 {
-                    if (item.Estado == 1 && (int)item.Color == i)
+                    for (int i = 0; i < cantidadColores; i++)
                     {
-                        posicionColores[i]++;
-                        break;
+                        if (item.Estado == 1 && (int)item.Color == i)
+                        {
+                            posicionColores[i]++;
+                            break;
+                        }
                     }
                 }
-            }
 
-            int repiteMax = posicionColores[0];
-            int indiceMax = 0;
-            for (int i = 0; i < posicionColores.Length; i++)
-            {
-                if (posicionColores[i] > repiteMax)
+                int repiteMax = posicionColores[0];
+                int indiceMax = 0;
+                for (int i = 0; i < posicionColores.Length; i++)
                 {
-                    repiteMax = posicionColores[i];
-                    indiceMax = i;
+                    if (posicionColores[i] > repiteMax)
+                    {
+                        repiteMax = posicionColores[i];
+                        indiceMax = i;
+                    }
                 }
+                return ((EColor)indiceMax).ToString();
             }
-
-            Array colores = Enum.GetValues(typeof(EColor));
-            string colorMasRepetido = "";
-            foreach (EColor item in colores)
-            {
-                if ((int)item == indiceMax)
-                {
-                    colorMasRepetido = item.ToString();
-                    break;
-                }
-            }
-            return colorMasRepetido;
+            return "No hay Autos en la Concesionaria.";
         }
 
         /// <summary>
@@ -115,46 +101,34 @@ namespace Entidades
         /// <returns> El color que mas abunda en la lista de Camionetas </returns>
         public static string MaxColor(this List<Camioneta> camionetas)
         {
-            string[] arrayColores = Enum.GetNames(typeof(EColor));
-            int cantidadColores = arrayColores.Length;
-            int[] posicionColores = new int[cantidadColores];
+            if(camionetas.Where(x => x.Estado == 1).ToList().Count > 0)
+            { 
+                string[] arrayColores = Enum.GetNames(typeof(EColor));
+                int cantidadColores = arrayColores.Length;
+                int[] posicionColores = new int[cantidadColores];
 
-            for (int i = 0; i < cantidadColores; i++) { posicionColores[i] = 0; }
+                for (int i = 0; i < cantidadColores; i++) { posicionColores[i] = 0; }
 
-            foreach (Camioneta item in camionetas)
-            {
-                for (int i = 0; i < cantidadColores; i++)
-                {
-                    if (item.Estado == 1 && (int)item.Color == i)
-                    {
-                        posicionColores[i]++;
-                        break;
+                foreach (Camioneta item in camionetas) {
+                    for (int i = 0; i < cantidadColores; i++) {
+                        if (item.Estado == 1 && (int)item.Color == i) {
+                            posicionColores[i]++;
+                            break;
+                        }
                     }
                 }
-            }
 
-            int repiteMax = posicionColores[0];
-            int indiceMax = 0;
-            for (int i = 0; i < posicionColores.Length; i++)
-            {
-                if (posicionColores[i] > repiteMax)
-                {
-                    repiteMax = posicionColores[i];
-                    indiceMax = i;
+                int repiteMax = posicionColores[0];
+                int indiceMax = 0;
+                for (int i = 0; i < posicionColores.Length; i++) {
+                    if (posicionColores[i] > repiteMax) {
+                        repiteMax = posicionColores[i];
+                        indiceMax = i;
+                    }
                 }
+                return ((EColor)indiceMax).ToString();
             }
-
-            Array colores = Enum.GetValues(typeof(EColor));
-            string colorMasRepetido = "";
-            foreach (EColor item in colores)
-            {
-                if ((int)item == indiceMax)
-                {
-                    colorMasRepetido = item.ToString();
-                    break;
-                }
-            }
-            return colorMasRepetido;
+            return "No hay Camionetas en la Concesionaria.";
         }
     }
 }

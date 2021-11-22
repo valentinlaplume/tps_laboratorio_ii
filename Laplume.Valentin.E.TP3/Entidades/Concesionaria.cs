@@ -64,22 +64,22 @@ namespace Entidades
 
         public static int CantidadTotalVehiculos
         {
-            get { return listAutos.Count() + listCamionetas.Count() + listMotocicletas.Count(); }
+            get { return listAutos.Where(x => x.Estado == 1).ToList().Count + listCamionetas.Where(x => x.Estado == 1).ToList().Count + listMotocicletas.Where(x => x.Estado == 1).ToList().Count; }
         }
 
         public static int CantidadAutos
         {
-            get { return listAutos.Count(); }
+            get { return listAutos.Where(x => x.Estado == 1).ToList().Count; }
         }
 
         public static int CantidadCamionetas
         {
-            get { return listCamionetas.Count(); }
+            get { return listCamionetas.Where(x => x.Estado == 1).ToList().Count; }
         }
 
         public static int CantidadMotocicletas
         {
-            get { return listMotocicletas.Count(); }
+            get { return listMotocicletas.Where(x => x.Estado == 1).ToList().Count; }
         }
 
         #region Codigo comentado propiedades no usadas
