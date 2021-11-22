@@ -1,0 +1,21 @@
+{
+  "version": 2,
+  "dgSpecHash": "HhCHRiGR7HQCMc0c5GtT9SSYdBNwnTG+WeEsm4/t/F60YGfjTqzGpEByvBYAcfpdmA0UaxS0QIGNiWy+w1R4Qw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\valentin\\Desktop\\TP4\\tps_laboratorio_ii-master\\TP4\\Excepciones\\Excepciones.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\valentin\\.nuget\\packages\\microsoft.chart.controls\\4.7.2046\\microsoft.chart.controls.4.7.2046.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "El paquete \"Microsoft.Chart.Controls 4.7.2046\" se restauró con \".NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8\" en lugar de la plataforma de destino del proyecto \"net5.0\". Puede que el paquete no sea totalmente compatible con el proyecto.",
+      "libraryId": "Microsoft.Chart.Controls",
+      "targetGraphs": [
+        "net5.0"
+      ]
+    }
+  ]
+}
